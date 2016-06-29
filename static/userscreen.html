@@ -1,69 +1,100 @@
 <!doctype html>
 <html>
-<head>
-<meta charset="utf-8">
-
-
-<link rel="image_src" type="image/jpeg" href="/images/logo.png">
-
-
-
-</head>
-
-
-    <body>
+    <head>
+        <meta charset="utf-8">
+        <title>List</title>
+        <link rel="stylesheet" href="semantic.css">
         <style type="text/css">
-        text-align: center;
+
         body ul {
-    margin-left: 2em;
-    padding-left: 1em;
+            margin-left: 2em;
+            padding-left: 1em;
+        }
 
+        li {
+            list-style-type: disc;
+        }
+            li.immediately {
+                color: red;
+            }
+            li.soon {
+                color: yellow;
+            }
+            li.later {
+                color: green;
+            }
+            li.inactive {
+                color: gray;
+            }
 
-}
-li {
-    list-style-type: disc;
-    color: #f00;
-  }
+        li > span {
+            /*color: black;*/
+        }
 
-  li > span {
-      color: #000;
-  }
- </style>
-
-      <div class="ui relaxed divided list">
-    <div class="item">
-      <!-- <i class="small github middle aligned icon"></i> -->
-      <div class="content", class="ui checkbox">
+        </style>
+        <script defer src="semantic.js"></script>
+    </head>
+    <body>
+        <!-- <div class="ui relaxed divided list">
+        <div class="item">
+        <i class="small github middle aligned icon"></i>
+        <div class="content ui checkbox">
+            <li>
+                <span>Some Text &emsp;
+                    <input type="checkbox" name="example">
+                    <label>got it</label>
+                </span>
+            </li>
+        </div>
+        <div class="description">
+            <span>&emsp;Updated 10 mins ago</span>
+        </div>
+        </div>
+        </div>
+        <div class="item">
+        <div class="content", class="ui checkbox">
         <li><span>Some Text &emsp;
-          <input type="checkbox" name="example">
-          <label>got it</label>
-</div></span></li>
-        <div class="description"><span>&emsp;Updated 10 mins ago</span></div><br>
-      </div>
-    </div>
-    <div class="item">
-
-      <div class="content", class="ui checkbox">
-        <li><span>Some Text &emsp;
-          <input type="checkbox" name="example">
-          <label>got it</label>
-</div></span></li>
+        <input type="checkbox" name="example">
+        <label>got it</label>
+        </div></span></li>
         <div class="description">&emsp;Updated 22 mins ago</div><br>
-      </div>
-    </div>
-    <div class="item">
-      <i class="large github middle aligned icon"></i>
-      <div class="content", class="ui checkbox">
+        </div>
+        </div>
+        <div class="item">
+        <i class="large github middle aligned icon"></i>
+        <div class="content", class="ui checkbox">
         <li><span>Some Text &emsp;
-          <input type="checkbox" name="example">
-          <label>got it</label>
-</div></span></li>
+        <input type="checkbox" name="example">
+        <label>got it</label>
+        </div></span></li>
         <div class="description">&emsp;Updated 34 mins ago</div>
-      </div>
-    </div>
-  </div>
+        </div>
+        </div>
+        </div> -->
 
-
+        <div class="ui relaxed divided list">
+            <div class="item">
+                <i class="large github middle aligned icon"></i>
+                <div class="content">
+                    <span class="header">Semantic-Org/Semantic-UI</span>
+                    <div class="description">Updated 10 mins ago</div>
+                </div>
+            </div>
+            <div class="item">
+                <i class="large github middle aligned icon"></i>
+                <div class="content">
+                    <a class="header">Semantic-Org/Semantic-UI-Docs</a>
+                    <div class="description">Updated 22 mins ago</div>
+                </div>
+            </div>
+            <div class="item">
+                <i class="large github middle aligned icon"></i>
+                <div class="content">
+                    <a class="header">Semantic-Org/Semantic-UI-Meteor</a>
+                    <div class="description">Updated 34 mins ago</div>
+                </div>
+            </div>
+        </div>
 
     </body>
 </html>
