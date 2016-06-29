@@ -1,0 +1,22 @@
+{
+  "name": "whatineed",
+  "version": "1.0.0",
+  "description": "Smart shopping list",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/segdeha/whatineed.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/segdeha/whatineed/issues"
+  },
+  "homepage": "https://github.com/segdeha/whatineed",
+  "dependencies": {
+    "quagga": "^0.11.2"
+  }
+}

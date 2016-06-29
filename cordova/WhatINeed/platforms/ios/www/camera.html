@@ -1,76 +1,29 @@
 <!doctype html>
 <html>
     <head>
+        <!-- https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy -->
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src *"> -->
+        <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
         <meta charset="utf-8">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <title>Capture Photo</title>
-
-        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-        <script type="text/javascript">
-
-        var pictureSource;   // picture source
-        var destinationType; // sets the format of returned value
-
-        document.addEventListener("deviceready", onDeviceReady, false);
-
-        function onDeviceReady() {
-            pictureSource   = navigator.camera.PictureSourceType;
-            destinationType = navigator.camera.DestinationType;
-        }
-
-        // Called when a photo is successfully retrieved
-        // @param String imageData base64-encoded image data
-        function onPhotoDataSuccess(imageData) {
-            var smallImage = document.getElementById('smallImage');
-            smallImage.style.display = 'block';
-            smallImage.src = "data:image/jpeg;base64," + imageData;
-        }
-
-        // Called when a photo is successfully retrieved
-        // @param String imageURI Image file URI
-        function onPhotoURISuccess(imageURI) {
-            var largeImage = document.getElementById('largeImage');
-            largeImage.style.display = 'block';
-            largeImage.src = imageURI;
-        }
-
-        // Take picture using device camera and retrieve image as base64-encoded string
-        function capturePhoto() {
-            navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-                quality: 50,
-                destinationType: destinationType.DATA_URL
-            });
-        }
-
-        // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
-        function capturePhotoEdit() {
-            navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-                quality: 20,
-                allowEdit: true,
-                destinationType: destinationType.DATA_URL
-            });
-        }
-
-        // Retrieve image file location from specified source
-        function getPhoto(source) {
-            navigator.camera.getPicture(onPhotoURISuccess, onFail, {
-                quality: 50,
-                destinationType: destinationType.FILE_URI,
-                sourceType: source
-            });
-        }
-
-        function onFail(message) {
-            alert('Image capture failed because: ' + message);
-        }
-
-        </script>
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <script defer src="cordova.js"></script>
+        <script defer src="js/jquery.js"></script>
+        <script defer src="js/semantic.js"></script>
+        <script defer src="js/quagga.js"></script>
+        <script defer src="js/camera.js"></script>
     </head>
     <body>
-        <button onclick="capturePhoto();">Capture Photo</button><br>
-        <button onclick="capturePhotoEdit();">Capture Editable Photo</button><br>
-        <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
-        <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button><br>
-        <img style="display:none;width:200px;height:auto;" id="smallImage" src="xyz" alt="">
-        <img style="display:none;width:100%;height:auto;" id="largeImage" src="xyz" alt="">
+        <h1>Camera</h1>
+        <p><button id="capture">Capture Photo</button></p>
+        <p><strong>Result:</strong> <span id="result"></span></p>
+        <!-- <p><button id="captureedit">Capture Editable Photo</button></p>
+        <p><button id="getphotolibrary">From Photo Library</button></p>
+        <p><button id="getphotosaved">From Photo Album</button></p> -->
+        <p><img style="display:none;width:200px;height:auto;" id="smallImage" src="http://segdeha.com/-/img/icons/github.png" alt=""></p>
+        <!-- <p><img style="display:none;width:100%;height:auto;" id="largeImage" src="http://segdeha.com/-/img/icons/github.png" alt=""></p> -->
     </body>
 </html>
