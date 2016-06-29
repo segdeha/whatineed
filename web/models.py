@@ -34,11 +34,11 @@ class People(models.Model):  #People who are logged in to use the applications f
 
 class PurchaseHistory(models.Model):  #When things are first put in the systmem and its relationship to person and state
     thing_id = models.ForeignKey(Things)
-    people_id = models.ForeignKey(People)
+    person_id = models.ForeignKey(People)
     purchase_date = models.DateTimeField(auto_now=True)
 
 
 class UsageHistory(models.Model):  # when things are used up and its relationship to person and state
     thing_id = models.ForeignKey(Things)
-    people_id = models.ForeignKey(People)
+    person_id = models.ForeignKey(People)
     done_date = models.DateTimeField(auto_now=True)
