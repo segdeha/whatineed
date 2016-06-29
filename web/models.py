@@ -1,25 +1,18 @@
 
 from django.db import models
-from django_enumfield import enum
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
+from datetime import timedelta
 
 # Create your models here.
 
 
-class Things(models.Model):  #Things you will need to have to replenish in the household
+class Thing(models.Model):  #Things you will need to have to replenish in the household
     name = models.CharField(max_length=255, validators=[MaxValueValidator(255)], blank=False)
     created_date = models.DateTimeField(auto_now_add=True)
     last_modified_date = models.DateTimeField(auto_now=True)
     product_image = models.URLField()
     upc = models.CharField(max_length=32, validators=[MaxValueValidator(32)], blank=True)
-
-
-class States(enum.Enum): #The states of things when the once the have a purchase and usage dates
-    IMMEDIATELY = 0
-    SOON = 1
-    LATER = 2
-    INACTIVE = 3
 
 
 class People(models.Model):  #People who are logged in to use the applications features
@@ -32,13 +25,23 @@ class People(models.Model):  #People who are logged in to use the applications f
     email = models.EmailField(blank=False)
 
 
-class PurchaseHistory(models.Model):  #When things are first put in the systmem and its relationship to person and state
-    thing_id = models.ForeignKey(Things)
-    person_id = models.ForeignKey(People)
-    purchase_date = models.DateTimeField(auto_now=True)
+class Purchase(models.Model):
 
+    STATES = (
+        (0, 'IMMEDIATELY'),
+        (1, 'SOON'),
+        (2, 'LATER'),
+        (3, 'INACTIVE'),
+        )
 
-class UsageHistory(models.Model):  # when things are used up and its relationship to person and state
-    thing_id = models.ForeignKey(Things)
-    person_id = models.ForeignKey(People)
-    done_date = models.DateTimeField(auto_now=True)
+    state = models.IntegerField(default=0, choices=STATES)
+    thing = models.ForeignKey(Thing)
+    owner = models.ForeignKey(People)
+    purchased = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now=True)
+    purchase_time = models.DateTimeField(auto_now=False)
+    consumed_time = models.DateTimeField(auto_now=False)
+
+    def duration(self):
+        duration = self.consumed_time - self.purchase_time
+        return duration
