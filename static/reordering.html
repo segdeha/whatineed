@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>List</title>
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" href="semantic.css">
+        <style type="text/css">
+
+        body {
+            margin: 1em;
+            padding: 0;
+        }
+
+        .status {
+            border-radius: 9px;
+            display: inline-block;
+            float: right;
+            height: 18px;
+            margin-top: 6px;
+            width: 18px;
+        }
+            .status.immediately {
+                background-color: red;
+            }
+            .status.soon {
+                background-color: yellow;
+            }
+            .status.later {
+                background-color: green;
+            }
+            .status.inactive {
+                background-color: gray;
+            }
+
+        li > span {
+            /*color: black;*/
+        }
+
+        .left-floated-checkbox {
+            float: left;
+            padding-top: 6px;
+        }
+
+        </style>
+    </head>
+    <body>
+        <div class="ui top attached tabular menu">
+            <a class="item active" data-tab="first">Need</a>
+            <a class="item" data-tab="second">Done</a>
+        </div>
+        <div class="ui bottom attached tab segment active" data-tab="first">
+            <div class="ui relaxed divided list"></div>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="second">
+            Done
+        </div>
+
+        <script src="jquery.js"></script>
+        <script src="semantic.js"></script>
+        <script>
+
+        (function () {
+            function ReorderableList(selector, data) {
+                this.selector = selector;
+                this.data = data;
+                // create an array to hold the item ids (populated by render)
+                this.ids = [];
+            }
+
+            var proto = ReorderableList.prototype;
+
+            /**
+             * Render a list
+             */
+            proto.render = function () {
+                // render items
+                var html = '';
+
+                function buildItem(item) {
+                    html += `
+                        <div class="item" data-id="${item.id}">
+                            <div class="content">
+                                <div class="ui checkbox left-floated-checkbox">
+                                    <input type="checkbox" name="example">
+                                    <label></label>
+                                </div>
+                                <span class="status ${item.status}"></span>
+                                <span class="header">${item.name}</span>
+                                <div class="description">Last purchased ${item.last_purchased} ago</div>
+                            </div>
+                        </div>`
+                    ;
+                    this.ids.push(item.id);
+                }
+
+                this.data.forEach(buildItem.bind(this));
+                $('.active .list').html(html);
+
+                function postInsertion() {
+                    // grab all of the list items from the dom, cast as an array
+                    this.items = Array.prototype.slice.call(document.querySelectorAll(this.selector));
+                    // get height of any 1 item
+                    this.itemHeight = parseInt(window.getComputedStyle(this.items[0], null).getPropertyValue('height'), 10);
+                    // activate the checkboxes
+                    this.initCheckboxes();
+                }
+
+                // get the items after they’ve been inserted into the dom
+                window.requestAnimationFrame(postInsertion.bind(this))
+            };
+
+            proto.initCheckboxes = function () {
+                var self = this;
+                $('.active .checkbox').checkbox({
+                    onChecked: function() {
+                        console.log('onChecked called', this);
+                        var id = self.getIdFromInput(this);
+
+console.log(id)
+
+                        // move the item to the end of the array
+                    },
+                    onUnchecked: function() {
+                        console.log('onUnchecked called', this);
+                        var id = self.getIdFromInput(this);
+
+console.log(id)
+
+                        // move the item to the beginning of the array
+                        // TODO: move the item to the previous position?
+                    }
+                });
+            };
+
+            /**
+             * Reorder a previously rendered list
+             */
+            proto.reorder = function () {
+                // get the order of the classes
+                // set transforms
+            };
+
+            proto.getIdFromInput = function (input) {
+                return $(input).parents('.item').attr('data-id');
+            };
+
+            function initReorderableList() {
+                var selector = '.active .list .item';
+                var data = [
+                    { id: '12345', name: 'Trader Joe’s Chunky Peanut Butter', status: 'immediately', last_purchased: '4 weeks' },
+                    { id: '23456', name: 'Clorox Bleach', status: 'soon', last_purchased: '12 days' },
+                    { id: '34567', name: 'Lipton’s Tea', status: 'later', last_purchased: '5 days' },
+                    { id: '45678', name: 'Cap’n Crunch Cereal', status: 'inactive', last_purchased: '10 minutes' }
+                ];
+                var list = new ReorderableList(selector, data);
+                list.render();
+            }
+
+            document.addEventListener('DOMContentLoaded', initReorderableList);
+        }());
+
+        </script>
+    </body>
+</html>
