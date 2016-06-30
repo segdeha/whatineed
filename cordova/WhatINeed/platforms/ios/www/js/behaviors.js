@@ -191,15 +191,21 @@
     // Called when a photo is successfully retrieved
     // @param String imageData base64-encoded image data
     function onPhotoDataSuccess(imageData) {
+        var dimmer = document.querySelector('.dimmer');
         var src = "data:image/jpeg;base64," + imageData;
 
         // show loading indicator
-        document.querySelector('.dimmer').classList.add('active');
+        dimmer.classList.add('active');
 
         function callback(result) {
             if(result.codeResult) {
                 // make ajax request for product info
+
+                // show product modal
                 $('#new-product').modal('show');
+
+                // hide loading indicator
+                dimmer.classList.remove('active');
             }
             else {
                 alert('No barcode detected');
