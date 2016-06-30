@@ -1,0 +1,7 @@
+{
+  "items": {
+{% for item in items %}
+      {{ item["name"] }}:{{ item["days"] }},
+{% endfor %}
+  }
+}

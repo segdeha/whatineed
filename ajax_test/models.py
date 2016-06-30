@@ -7,3 +7,4 @@ class Musician(models.Model):
     likes = models.IntegerField()
     def __str__(self):
         return self.name
+ 
