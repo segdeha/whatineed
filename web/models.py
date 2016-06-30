@@ -40,8 +40,8 @@ class Purchase(models.Model):
     purchased = models.BooleanField(default=False)
     estimated_number_of_days = models.PositiveSmallIntegerField(default=7, blank=False)
     created_date = models.DateTimeField(auto_now_add=True)
-    purchase_date = models.DateTimeField(auto_now=False, blank=True)
-    consumed_date = models.DateTimeField(auto_now=False, blank=True)
+    purchase_date = models.DateTimeField(auto_now=False, blank=True, null=True)
+    consumed_date = models.DateTimeField(auto_now=False, blank=True, null=True)
 
     def duration(self):
         duration = self.consumed_time - self.purchase_time
