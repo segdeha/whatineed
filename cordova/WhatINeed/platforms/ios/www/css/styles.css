@@ -1,6 +1,6 @@
 body {
     margin: 1em;
-    padding: 0;
+    padding-top: 30px;
 }
 
 .list {
@@ -43,4 +43,8 @@ body {
 
 input[type=range] {
     width: 100%;
+}
+
+#barcode-result {
+    text-align: center;
 }

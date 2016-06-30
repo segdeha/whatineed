@@ -192,20 +192,29 @@
     // @param String imageData base64-encoded image data
     function onPhotoDataSuccess(imageData) {
         var dimmer = document.querySelector('.dimmer');
+        var dimmerText = dimmer.querySelector('.text');
         var src = "data:image/jpeg;base64," + imageData;
 
         // show loading indicator
+        dimmerText.innerHTML = 'Deciphering barcode…';
         dimmer.classList.add('active');
 
         function callback(result) {
             if(result.codeResult) {
+                // display barcode value
+                document.getElementById('barcode-result')
+                    .innerHTML = `Barcode value: ${result.codeResult.code}`;
+
+                dimmerText.innerHTML = 'Fetching product info…';
+
                 // make ajax request for product info
+                setTimeout(function () {
+                    // show product modal
+                    $('#new-product').modal('show');
 
-                // show product modal
-                $('#new-product').modal('show');
-
-                // hide loading indicator
-                dimmer.classList.remove('active');
+                    // hide loading indicator
+                    dimmer.classList.remove('active');
+                }, 1000);
             }
             else {
                 alert('No barcode detected');
@@ -215,9 +224,10 @@
         Quagga.decodeSingle({
             decoder: {
                 readers: [
-                    'code_128_reader', 'ean_reader', 'ean_8_reader',
-                    'code_39_reader', 'code_39_vin_reader', 'codabar_reader',
-                    'upc_reader', 'upc_e_reader', 'i2of5_reader',
+                    // order matters, upc is most common in the usa
+                    'upc_reader', 'upc_e_reader', 'ean_reader', 'ean_8_reader',
+                    'code_128_reader', 'code_39_reader', 'code_39_vin_reader',
+                    'codabar_reader', 'i2of5_reader',
                 ] // List of active readers
             },
             locate: true, // try to locate the barcode in the image

@@ -45,7 +45,7 @@
 
         <!-- loading indicator -->
         <div class="ui dimmer"><!-- add `active` class to show -->
-            <div class="ui loader"></div>
+            <div class="ui text loader"></div>
         </div>
 
         <!-- new product modal -->
@@ -53,6 +53,7 @@
             <div class="header">Confirm</div>
             <div class="content">
                 <p><img class="ui small centered image" src="http://fieldofgreenspc.com/assets/img/produce.png" alt=""></p>
+                <div id="barcode-result"></div>
             </div>
             <div class="actions">
                 <div class="ui left aligned segment">
@@ -60,7 +61,7 @@
                     <input type="range" name="number-of-days" min="1" max="30" value="7" step="1">
                 </div>
                 <div class="ui primary button">Save</div>
-                <div class="ui cancel button">Close</div>
+                <div class="ui cancel button">Cancel</div>
             </div>
         </div>
 
