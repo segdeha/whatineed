@@ -38,7 +38,7 @@ class Purchase(models.Model):
     thing_id = models.ForeignKey(Thing)
     owner_id = models.ForeignKey(People)
     purchased = models.BooleanField(default=False)
-    created_date = models.DateTimeField(auto_now=True)
+    created_date = models.DateTimeField(auto_now_add=True)
     purchase_date = models.DateTimeField(auto_now=False)
     consumed_date = models.DateTimeField(auto_now=False)
 
