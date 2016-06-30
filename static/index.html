@@ -26,11 +26,17 @@
             </div>
         </div>
 
+        <!-- new product button -->
+        <div class="ui bottom attached center aligned">
+            <p>&nbsp;</p>
+            <button id="new-product-button" class="ui button">+</button>
+        </div>
+
         <!-- product info modal -->
         <div id="product-info" class="ui large modal">
             <div class="header">Trader Joe's Organic Peanut Butter</div>
             <div class="content">
-                <p><img class="ui small centered image" src="http://fieldofgreenspc.com/assets/img/produce.png"></p>
+                <p><img class="ui small centered image" src="http://fieldofgreenspc.com/assets/img/produce.png" alt=""></p>
             </div>
             <div class="actions">
                 <div class="ui left aligned segment">
@@ -38,6 +44,11 @@
                 </div>
                 <div class="ui cancel button">Close</div>
             </div>
+        </div>
+
+        <!-- loading indicator -->
+        <div class="ui dimmer"><!-- add `active` class to show -->
+            <div class="ui loader"></div>
         </div>
 
         <!-- new product modal -->
@@ -48,8 +59,10 @@
             </div>
             <div class="actions">
                 <div class="ui left aligned segment">
-                    Slider
+                    <p>Estimated number of days to use it up: <span id="number-of-days"></span></p>
+                    <input type="range" name="number-of-days" min="1" max="30" value="7" step="1">
                 </div>
+                <div class="ui primary button">Save</div>
                 <div class="ui cancel button">Close</div>
             </div>
         </div>
@@ -57,6 +70,7 @@
         <script src="js/jquery.js"></script>
         <script src="js/semantic.js"></script>
         <script src="js/range.js"></script>
+        <script src="js/quagga.js"></script>
         <script src="js/behaviors.js"></script>
     </body>
 </html>
