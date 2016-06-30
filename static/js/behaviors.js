@@ -146,18 +146,27 @@
         list.render();
     }
 
-    document.addEventListener('DOMContentLoaded', initReorderableList);
-}());
+    function initUI() {
+        $('.menu .item').tab();
 
-$('.menu .item').tab();
-
-document.querySelector('.active .list').addEventListener('click', function (evt) {
-    if (evt.target.matches('.header') || evt.target.matches('.description')) {
-        // get image source
-        var src = $(evt.target).parents('.item').attr('data-src');
-        // set image source
-        $('.ui.modal .image').attr('src', src);
-        // show modal
-        $('.ui.modal').modal('show');
+        document.querySelector('.active .list').addEventListener('click', function (evt) {
+            if (evt.target.matches('.header') || evt.target.matches('.description')) {
+                // get image source
+                var src = $(evt.target).parents('.item').attr('data-src');
+                // set image source
+                if (src) {
+                    $('#product-info .image').attr('src', src);
+                }
+                // show modal
+                $('#product-info').modal('show');
+            }
+        });
     }
-});
+
+    function init() {
+        initReorderableList();
+        initUI();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+}());
