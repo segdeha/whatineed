@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>List</title>
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" href="semantic.css">
+
+        <style type="text/css">
+
+        body {
+            margin: 1em;
+            padding: 0;
+        }
+
+        .status {
+            border-radius: 9px;
+            display: inline-block;
+            float: right;
+            height: 18px;
+            margin-top: 6px;
+            width: 18px;
+        }
+            .status.immediately {
+                background-color: red;
+            }
+            .status.soon {
+                background-color: yellow;
+            }
+            .status.later {
+                background-color: green;
+            }
+            .status.inactive {
+                background-color: gray;
+            }
+
+        li > span {
+            /*color: black;*/
+        }
+
+        .left-floated-checkbox {
+            float: left;
+            padding-top: 6px;
+        }
+
+        </style>
+    </head>
+    <body>
+        <div class="ui top attached tabular menu">
+            <a class="item active" data-tab="first">Need</a>
+            <a class="item" data-tab="second">Done</a>
+        </div>
+        <div class="ui bottom attached tab segment active" data-tab="first">
+            <div class="ui relaxed divided list">
+                <div class="item">
+                    <div class="content">
+                        <div class="ui checkbox left-floated-checkbox">
+                            <input type="checkbox" name="example">
+                            <label></label>
+                        </div>
+                        <span class="status immediately"></span>
+                        <span class="header">Trader Joe’s Chunky Peanut Butter</span>
+                        <div class="description">Last purchased 4 weeks ago</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="content">
+                        <div class="ui checkbox left-floated-checkbox">
+                            <input type="checkbox" name="example">
+                            <label></label>
+                        </div>
+                        <span class="status soon"></span>
+                        <span class="header">Clorox Bleach</span>
+                        <div class="description">Last purchased 12 days ago</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="content">
+                        <div class="ui checkbox left-floated-checkbox">
+                            <input type="checkbox" name="example">
+                            <label></label>
+                        </div>
+                        <span class="status later"></span>
+                        <span class="header">Lipton’s Tea</span>
+                        <div class="description">Last purchased 5 days ago</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="content">
+                        <div class="ui checkbox left-floated-checkbox">
+                            <input type="checkbox" name="example">
+                            <label></label>
+                        </div>
+                        <span class="status inactive"></span>
+                        <span class="header">Cap’n Crunch Cereal</span>
+                        <div class="description">Last purchased 10 mins ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="second">
+            Done
+        </div>
+
+        <!-- put product information modal below -->
+        <div class="ui large modal">
+            <div class="header">Trader Joe's Organic Peanut Butter</div>
+            <div class="content">
+                <p><img <img class="ui fluid image" src="https://s-media-cache-ak0.pinimg.com/236x/0f/97/f4/0f97f4af8d0e25b3e7e213bc185c92f1.jpg"></p>
+            </div>
+            <div class="actions">Purchase Date: 
+                <div class="ui cancel button">Close</div>
+            </div>
+        </div>
+
+        <script src="jquery.js"></script>
+        <script src="semantic.js"></script>
+        <script>
+        $('.menu .item').tab();
+
+        $('.header').click(function () {
+            $('.ui.modal').modal('show');
+            $('.ui.basic.modal').modal('show');
+            $('.ui.fullscreen.modal').modal('show');
+            $('.ui.small.modal').modal('show');
+            $('.ui.large.modal').modal('show');
+        });
+
+        </script>
+    </body>
+</html>
