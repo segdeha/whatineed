@@ -12,7 +12,7 @@ class Thing(models.Model):  #Things you will need to have to replenish in the ho
     created_date = models.DateTimeField(auto_now_add=True)
     last_modified_date = models.DateTimeField(auto_now=True)
     product_image = models.URLField()
-    upc = models.CharField(max_length=32, validators=[MaxValueValidator(32)], blank=True)
+    barcode = models.CharField(max_length=32, validators=[MaxValueValidator(32)], blank=True)
 
 
 class People(models.Model):  #People who are logged in to use the applications features
@@ -38,6 +38,7 @@ class Purchase(models.Model):
     thing_id = models.ForeignKey(Thing)
     owner_id = models.ForeignKey(People)
     purchased = models.BooleanField(default=False)
+    estimated_number_of_days = models.PositiveSmallIntegerField(default=7, blank=False)
     created_date = models.DateTimeField(auto_now_add=True)
     purchase_date = models.DateTimeField(auto_now=False)
     consumed_date = models.DateTimeField(auto_now=False)
