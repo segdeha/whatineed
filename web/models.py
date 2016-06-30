@@ -35,12 +35,12 @@ class Purchase(models.Model):
         )
 
     state = models.IntegerField(default=0, choices=STATES)
-    thing = models.ForeignKey(Thing)
-    owner = models.ForeignKey(People)
+    thing_id = models.ForeignKey(Thing)
+    owner_id = models.ForeignKey(People)
     purchased = models.BooleanField(default=False)
-    created = models.DateTimeField(auto_now=True)
-    purchase_time = models.DateTimeField(auto_now=False)
-    consumed_time = models.DateTimeField(auto_now=False)
+    created_date = models.DateTimeField(auto_now=True)
+    purchase_date = models.DateTimeField(auto_now=False)
+    consumed_date = models.DateTimeField(auto_now=False)
 
     def duration(self):
         duration = self.consumed_time - self.purchase_time
