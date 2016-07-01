@@ -1,38 +1,20 @@
 import statistics as stats
 import numpy as np
 
-outlist = [20, 15, 25, 2, 10000, 12, 14, 19]
-reglist = [20, 15, 25, 30, 15, 12, 14, 19]
-
-# deicded I don't need this function
-
-def remove_outliers(data):
-    # order list
-    data = sorted(data)
-    # if values at both ends aren't within two standard deviations of the pure mean (the mean that doesn't include them), take them out of the data
-
-    acceptable_range = stats.stdev(data[1:-1])*2 # two standard deviations
-    pure_median = stats.median(data[1:-1])
-
-    # if datapoint distance from pure median > two stdevs from pure median then datapoint is outlier
-    if abs(data[0] - pure_median) > acceptable_range: # idk if the first part of this is correct
-        data.pop(0)
-    if abs(data[-1] - pure_median) > acceptable_range: # idk if the first part of this is correct
-        data.pop()
-    return data
-    # and return the mean
-
-
-def predict(user_predict, *args):
+def relevant_mean(user_predict, *args): # returns mean of data it deems relevant
+    if isinstance(args[0], list):
+        collected_data = args[0]
+    else:
+        collected_data = list(args)
+    # add the initial user prediction to the beginning of our actual data
+    all_data = [user_predict] + collected_data
     # user_predict and all args should be ints
-    if not all(isinstance(item, int) for item in relevant_data):
+    if not all(isinstance(item, int) for item in all_data):
             raise TypeError("predict() needs positive ints!")
             # is it worth checking for negative ints?
-    all_data = [user_predict] + list(args)
-    relevant_data = []
-    if len(all_data) < 10: # 10 is very arbitrary
-        relevant_data = all_data
-    else: # relevant_data is the last ten data points minus any outliers
-        relevant_data = args[-10:]
-    # take the average of all relevant data and round down
-    prediction = int(np.percentile(relevant_data, 10))
+    if len(all_data) < 4: # if there's only 4 datapoints use all of them
+        return int(stats.mean(all_data))
+    elif len(all_data) < 10: # 10 is very arbitrary
+        return int(np.percentile(all_data, 10)) # np.percentile excludes data outside the 80th percentile
+    else: # only use the last ten data points
+        return int(np.percentile(args[-10:], 10))

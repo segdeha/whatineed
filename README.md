@@ -36,6 +36,10 @@ you should see (env) show up in front of your prompt (ex: `(env) Jasmine@Home $`
 
 follow its instructions and make sure you see the right message in your browser.
 
+## Requirements (for now)
+
+    pip install numpy
+
 ## Installing Cordova
 
 _Note: Instructions below are for OS X and iOS for now. Windows and Android “coming soon.”_
@@ -47,7 +51,3 @@ If you want to build the mobile app, you will need to install the `cordova` app.
 To run the app on the iOS simulator, you first need to install [Xcode](https://itunes.apple.com/us/app/xcode/id497799835?mt=12), then `cd` into `cordova/WhatINeed` then run the following command:
 
     cordova run ios
-
-
-
-
