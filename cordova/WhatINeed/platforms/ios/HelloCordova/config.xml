@@ -18,13 +18,25 @@
     <feature name="Camera">
         <param name="ios-package" value="CDVCamera" />
     </feature>
+<<<<<<< Updated upstream:cordova/WhatINeed/platforms/ios/HelloCordova/config.xml
     <name>HelloCordova</name>
+=======
+    <feature name="SplashScreen">
+        <param name="ios-package" value="CDVSplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
+    <name>WhatINeed</name>
+>>>>>>> Stashed changes:cordova/WhatINeed/platforms/ios/WhatINeed/config.xml
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">
         Apache Cordova Team
     </author>
+<<<<<<< Updated upstream:cordova/WhatINeed/platforms/ios/HelloCordova/config.xml
+=======
+    <icon src="res/app-logo.png" />
+>>>>>>> Stashed changes:cordova/WhatINeed/platforms/ios/WhatINeed/config.xml
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
