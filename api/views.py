@@ -12,7 +12,7 @@ def barcode(request, barcode_number):
     try:
         # Return Success from jsonapi.org/format
         data = dict(Thing.objects.filter(barcode = barcode_number).values().first())
-        json_object = {'data':data, 'self': '/api/' + barcode_number}
+        json_object = {'data':data, 'self': '/api/thing/' + barcode_number}
     except TypeError:
         # Return Error from jsonapi.org/format
         data = None
@@ -21,3 +21,15 @@ def barcode(request, barcode_number):
         error = {'status':"404 Not Found", 'title':title,'detail':detail}
         json_object = {'errors' : error, 'data': data}
     return JsonResponse(json_object)
+
+def people_need(request,username):
+    pass
+
+def people_done(request,username):
+    pass
+
+def people_usage(request,username,barcode_number):
+    pass
+
+def people_purchase(request,username,barcode_number):
+    pass
