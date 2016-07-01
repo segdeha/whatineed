@@ -26,6 +26,18 @@
     padding-top: 30px;
 }
 
+/* branding element */
+h1 {
+    background: url(../img/whatineed-logo.png) no-repeat;
+    background-size: 32px 32px;
+    height: 32px;
+    position: absolute;
+    right: 14px;
+    text-indent: -9999px;
+    top: 48px;
+    width: 32px;
+}
+
 .list {
     position: relative;
 }
@@ -35,7 +47,7 @@
         position: absolute;
         right: 0;
         top: 0;
-        transition: transform 0.25s;
+        transition: transform 0.33s;
     }
 
 .status {
@@ -108,5 +120,5 @@ input[type=range] {
     position: absolute;
     left: 50%;
     margin-left: -32px;
-    top: -32px;
+    top: -33px;
 }

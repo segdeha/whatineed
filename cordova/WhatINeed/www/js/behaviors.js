@@ -24,12 +24,15 @@
         $('.ui.form').submit(function (evt) {
             $('#login').fadeOut(250, function () {
                 $('#lists').addClass('show');
-                initList();
+                window.requestAnimationFrame(initList);
             });
         });
     }
 
     function initList() {
+
+        var camera = new Camera();
+        $('#new-product-button').on('click', camera.capturePhoto);
 
         var selector = '.active .list .item';
         // TODO fetch data from server
@@ -52,12 +55,6 @@
             }
         });
 
-        var camera;
-        document.addEventListener('deviceready', function (evt) {
-            camera = new Camera();
-            $('#new-product-button').on('click', camera.capturePhoto);
-        });
-
         var rangeInput = document.querySelector('[name="number-of-days"]');
         var rangeValue = document.getElementById('number-of-days');
 
@@ -72,6 +69,11 @@
     function init() {
         initLogin();
     }
+
+    var deviceready;
+    document.addEventListener('deviceready', function (evt) {
+        deviceready = true;
+    });
 
     document.addEventListener('DOMContentLoaded', init);
 
