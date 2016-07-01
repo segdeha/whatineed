@@ -154,25 +154,12 @@
         $('.menu .item').tab();
 
         document.querySelector('.active .list').addEventListener('click', function (evt) {
-<<<<<<< HEAD
             var src;
             if (evt.target.matches('.header') || evt.target.matches('.description')) {
                 // get image source from div.item[data-src]
                 src = $(evt.target).parents('.item').attr('data-src') || 'img/default-image.png';
                 // set image source
                 $('#product-info .image').attr('src', src);
-=======
-            if (evt.target.matches('.header') || evt.target.matches('.description')) {
-                // get image source from div.item[data-src]
-                var src = $(evt.target).parents('.item').attr('data-src');
-                // set image source
-                if (src) {
-                    $('#product-info .image').attr('src', src);
-                }
-                else {
-                    src = 'http://fieldofgreenspc.com/assets/img/produce.png';
-                }
->>>>>>> master
                 // show modal
                 $('#product-info').modal('show');
             }
@@ -180,14 +167,10 @@
 
         document.querySelector('#new-product-button').addEventListener('click', capturePhoto);
 
-<<<<<<< HEAD
         var deviceReady = false;
 
         document.addEventListener("deviceready", function (evt) {
             deviceReady = true;
-=======
-        document.addEventListener("deviceready", function (evt) {
->>>>>>> master
             // picture source
             // var pictureSource = navigator.camera.PictureSourceType;
             // sets the format of returned value
@@ -208,18 +191,10 @@
     // @param String imageData base64-encoded image data
     function onPhotoDataSuccess(imageData) {
         var dimmer = document.querySelector('.dimmer');
-<<<<<<< HEAD
         var src = 'data:image/jpeg;base64,' + imageData;
 
         // show loading indicator
         dimmer.querySelector('.text').innerHTML = 'Deciphering barcode…';
-=======
-        var dimmerText = dimmer.querySelector('.text');
-        var src = "data:image/jpeg;base64," + imageData;
-
-        // show loading indicator
-        dimmerText.innerHTML = 'Deciphering barcode…';
->>>>>>> master
         dimmer.classList.add('active');
 
         function callback(result) {
@@ -228,11 +203,7 @@
                 document.getElementById('barcode-result')
                     .innerHTML = `Barcode value: ${result.codeResult.code}`;
 
-<<<<<<< HEAD
                 dimmer.querySelector('.text').innerHTML = 'Fetching product info…';
-=======
-                dimmerText.innerHTML = 'Fetching product info…';
->>>>>>> master
 
                 // make ajax request for product info
                 setTimeout(function () {
@@ -266,19 +237,12 @@
 
     // take picture using device camera and retrieve image as base64-encoded string
     function capturePhoto() {
-<<<<<<< HEAD
         if (deviceReady) {
             navigator.camera.getPicture(onPhotoDataSuccess, onCaptureFail, {
                 quality: 50,
                 destinationType: navigator.camera.DestinationType.DATA_URL
             });
         }
-=======
-        navigator.camera.getPicture(onPhotoDataSuccess, onCaptureFail, {
-            quality: 50,
-            destinationType: navigator.camera.DestinationType.DATA_URL
-        });
->>>>>>> master
     }
 
     // image capture failed
