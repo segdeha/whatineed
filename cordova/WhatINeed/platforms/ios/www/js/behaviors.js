@@ -13,6 +13,14 @@
         this.ids = [];
         // the height as a number of one list item (in px)
         this.itemHeight = null;
+        // start preloading images
+        var delay = 100; // ms
+        this.data.forEach(function (item, idx) {
+            setTimeout(function () {
+                var img = new Image();
+                img.src = item.src;
+            }, delay * idx);
+        });
     }
 
     var proto = ReorderableList.prototype;

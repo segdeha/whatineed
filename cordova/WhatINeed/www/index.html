@@ -14,17 +14,50 @@
     <body>
         <div class="top-padding"></div>
 
-        <div class="ui container">
+        <div id="login" class="ui middle aligned center aligned grid">
+            <div class="column">
+                <h2 class="ui image header">
+                    <img src="img/whatineed-logo.png" class="small image" alt="">
+                    <div class="content">
+                        What I need…
+                    </div>
+                </h2>
+                <form class="ui large form">
+                    <div class="ui segment">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                <input type="text" name="email" placeholder="E-mail address">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="lock icon"></i>
+                                <input type="password" name="password" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="ui fluid large submit button">Login</div>
+                    </div>
+                    <div class="ui error message"></div>
+                </form>
+            </div>
+        </div>
+
+        <div id="lists" class="ui container">
             <!-- tabs -->
             <div class="ui top attached tabular menu">
-                <a class="item active" data-tab="first">Need</a>
-                <a class="item" data-tab="second">Done</a>
+                <a class="item active" data-tab="first">What I need…</a>
+                <a class="item" data-tab="second">What I’ve used…</a>
             </div>
 
             <!-- lists -->
             <div class="ui bottom attached tab segment active" data-tab="first">
                 <div class="ui relaxed divided list"></div>
-                <button id="new-product-button"><img class="ui mini image" src="img/plus.png" alt=""></button>
+                <!-- camera button -->
+                <div class="new-product-button-container">
+                    <div class="hump"></div>
+                    <div id="new-product-button"><img src="img/camera-icon.png" alt=""></div>
+                </div>
             </div>
             <div class="ui bottom attached tab segment" data-tab="second">
                 <div class="ui relaxed divided list">
@@ -73,6 +106,8 @@
         <script src="js/jquery.js"></script>
         <script src="js/semantic.js"></script>
         <script src="js/quagga.js"></script>
+        <script src="js/reorderablelist.js"></script>
+        <script src="js/camera.js"></script>
         <script src="js/behaviors.js"></script>
     </body>
 </html>
