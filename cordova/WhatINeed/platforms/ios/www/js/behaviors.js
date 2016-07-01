@@ -116,7 +116,7 @@
         var data = [
             {
                 id: '12345',
-                name: 'Trader Joe’s Crunchy Peanut Butter',
+                name: 'Trader Joe’s Peanut Butter',
                 status: 'immediately',
                 last_purchased: '4 weeks',
                 src: 'http://nourishedbynutrition.com/wp-content/uploads/2014/09/Trader-Joes-Crunchy-Peanut-Butter-1-of-12.jpg'

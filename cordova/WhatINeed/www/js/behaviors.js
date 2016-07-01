@@ -13,6 +13,14 @@
         this.ids = [];
         // the height as a number of one list item (in px)
         this.itemHeight = null;
+        // start preloading images
+        var delay = 100; // ms
+        this.data.forEach(function (item, idx) {
+            setTimeout(function () {
+                var img = new Image();
+                img.src = item.src;
+            }, delay * idx);
+        });
     }
 
     var proto = ReorderableList.prototype;
@@ -116,7 +124,7 @@
         var data = [
             {
                 id: '12345',
-                name: 'Trader Joe’s Crunchy Peanut Butter',
+                name: 'Trader Joe’s Peanut Butter',
                 status: 'immediately',
                 last_purchased: '4 weeks',
                 src: 'http://nourishedbynutrition.com/wp-content/uploads/2014/09/Trader-Joes-Crunchy-Peanut-Butter-1-of-12.jpg'

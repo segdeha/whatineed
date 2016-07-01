@@ -12,56 +12,60 @@
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
-        <!-- tabs -->
-        <div class="ui top attached tabular menu">
-            <a class="item active" data-tab="first">Need</a>
-            <a class="item" data-tab="second">Done</a>
-        </div>
+        <div class="top-padding"></div>
 
-        <!-- lists -->
-        <div class="ui bottom attached tab segment active" data-tab="first">
-            <div class="ui relaxed divided list"></div>
-            <button id="new-product-button"><img class="ui mini image" src="img/plus.png" alt=""></button>
-        </div>
-        <div class="ui bottom attached tab segment" data-tab="second">
-            <div class="ui relaxed divided list">
-                Done
+        <div class="ui container">
+            <!-- tabs -->
+            <div class="ui top attached tabular menu">
+                <a class="item active" data-tab="first">Need</a>
+                <a class="item" data-tab="second">Done</a>
             </div>
-        </div>
 
-        <!-- product info modal -->
-        <div id="product-info" class="ui large modal">
-            <div class="header">Trader Joe's Organic Peanut Butter</div>
-            <div class="content">
-                <p><img class="ui small centered image" src="img/default-image.png" alt=""></p>
+            <!-- lists -->
+            <div class="ui bottom attached tab segment active" data-tab="first">
+                <div class="ui relaxed divided list"></div>
+                <button id="new-product-button"><img class="ui mini image" src="img/plus.png" alt=""></button>
             </div>
-            <div class="actions">
-                <div class="ui left aligned segment">
-                    Last purchased <span id="last-purchased">12 days</span> ago
+            <div class="ui bottom attached tab segment" data-tab="second">
+                <div class="ui relaxed divided list">
+                    Done
                 </div>
-                <div class="ui cancel button">Close</div>
             </div>
-        </div>
 
-        <!-- loading indicator -->
-        <div class="ui dimmer"><!-- add `active` class to show -->
-            <div class="ui text loader"></div>
-        </div>
-
-        <!-- new product modal -->
-        <div id="new-product" class="ui large modal">
-            <div class="header">Confirm</div>
-            <div class="content">
-                <p><img class="ui small centered image" src="img/default-image.png" alt=""></p>
-                <div id="barcode-result"></div>
-            </div>
-            <div class="actions">
-                <div class="ui left aligned segment">
-                    <p>Estimated number of days to use it up: <span id="number-of-days"></span></p>
-                    <input type="range" name="number-of-days" min="1" max="30" value="7" step="1">
+            <!-- product info modal -->
+            <div id="product-info" class="ui large modal">
+                <div class="header">Trader Joe's Organic Peanut Butter</div>
+                <div class="content">
+                    <p><img class="ui small centered image" src="img/default-image.png" alt=""></p>
                 </div>
-                <div class="ui primary button">Save</div>
-                <div class="ui cancel button">Cancel</div>
+                <div class="actions">
+                    <div class="ui left aligned segment">
+                        Last purchased <span id="last-purchased">12 days</span> ago
+                    </div>
+                    <div class="ui cancel button">Close</div>
+                </div>
+            </div>
+
+            <!-- loading indicator -->
+            <div class="ui dimmer"><!-- add `active` class to show -->
+                <div class="ui text loader"></div>
+            </div>
+
+            <!-- new product modal -->
+            <div id="new-product" class="ui large modal">
+                <div class="header">Confirm</div>
+                <div class="content">
+                    <p><img class="ui small centered image" src="img/default-image.png" alt=""></p>
+                    <div id="barcode-result"></div>
+                </div>
+                <div class="actions">
+                    <div class="ui left aligned segment">
+                        <p>Estimated number of days to use it up: <span id="number-of-days"></span></p>
+                        <input type="range" name="number-of-days" min="1" max="30" value="7" step="1">
+                    </div>
+                    <div class="ui primary button">Save</div>
+                    <div class="ui cancel button">Cancel</div>
+                </div>
             </div>
         </div>
 
