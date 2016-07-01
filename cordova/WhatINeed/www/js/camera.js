@@ -2,13 +2,13 @@
  * Camera
  * @requires Quagga
  */
-var Camera = (function (window, document, $, undefined) {
+var BarcodeReader = (function (window, document, $, undefined) {
 
     'use strict';
 
-    function Camera() {}
+    function BarcodeReader() {}
 
-    var proto = Camera.prototype;
+    var proto = BarcodeReader.prototype;
 
     // Called when a photo is successfully retrieved
     // @param String imageData base64-encoded image data
@@ -69,6 +69,6 @@ var Camera = (function (window, document, $, undefined) {
         alert('Image capture failed because: ' + message);
     };
 
-    return Camera;
+    return BarcodeReader;
 
 }(this, this.document, jQuery));

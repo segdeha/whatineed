@@ -1,6 +1,8 @@
 (function (window, document, $, undefined) {
     'use strict';
 
+    console.log(ReorderableList, BarcodeReader);
+
     function initLogin() {
         $('.ui.form').form({
             fields: {
@@ -31,8 +33,8 @@
 
     function initList() {
 
-        var camera = new Camera();
-        $('#new-product-button').on('click', camera.capturePhoto);
+        var barcodeReader = new BarcodeReader();
+        $('#new-product-button').on('click', barcodeReader.capturePhoto);
 
         var selector = '.active .list .item';
         // TODO fetch data from server

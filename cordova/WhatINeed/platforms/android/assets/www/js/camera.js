@@ -1,105 +1,74 @@
-console.log(Quagga);
+/**
+ * Camera
+ * @requires Quagga
+ */
+var BarcodeReader = (function (window, document, $, undefined) {
 
-var pictureSource;   // picture source
-var destinationType; // sets the format of returned value
+    'use strict';
 
-document.addEventListener("deviceready", onDeviceReady, false);
+    function BarcodeReader() {}
 
-function onDeviceReady() {
-    pictureSource   = navigator.camera.PictureSourceType;
-    destinationType = navigator.camera.DestinationType;
+    var proto = BarcodeReader.prototype;
 
-    document.getElementById('capture').addEventListener('click', capturePhoto);
-    // document.getElementById('captureedit').addEventListener('click', capturePhotoEdit);
-    // document.getElementById('getphotolibrary').addEventListener('click', function () {
-    //     getPhoto(pictureSource.PHOTOLIBRARY);
-    // });
-    // document.getElementById('getphotosaved').addEventListener('click', function () {
-    //     getPhoto(pictureSource.SAVEDPHOTOALBUM)
-    // });
-}
+    // Called when a photo is successfully retrieved
+    // @param String imageData base64-encoded image data
+    proto.onPhotoDataSuccess = function (imageData) {
+        var dimmer = document.querySelector('.dimmer');
+        var src = 'data:image/jpeg;base64,' + imageData;
 
-// Called when a photo is successfully retrieved
-// @param String imageData base64-encoded image data
-function onPhotoDataSuccess(imageData) {
-    var src = "data:image/jpeg;base64," + imageData;
+        // show loading indicator
+        dimmer.querySelector('.text').innerHTML = 'Deciphering barcode…';
+        dimmer.classList.add('active');
 
-    var resultSpan = document.getElementById('result');
-    resultSpan.innerHTML = 'Working';
+        function callback(result) {
+            if(result.codeResult) {
+                // display barcode value
+                document.getElementById('barcode-result')
+                    .innerHTML = `Barcode value: ${result.codeResult.code}`;
 
-    var smallImage = document.getElementById('smallImage');
-    smallImage.style.display = 'block';
-    smallImage.src = src;
+                dimmer.querySelector('.text').innerHTML = 'Fetching product info…';
 
-    var opts = {
-        decoder: {
-            readers: [
-                // 'code_128_reader',
-                // 'ean_reader',
-                // 'ean_8_reader',
-                // 'upc_reader',
-                // 'upc_e_reader',
-                'code_128_reader',
-                'ean_reader',
-                'ean_8_reader',
-                'code_39_reader',
-                'code_39_vin_reader',
-                'codabar_reader',
-                'upc_reader',
-                'upc_e_reader',
-                'i2of5_reader',
-            ] // List of active readers
-        },
-        locate: true, // try to locate the barcode in the image
-        src: src // or 'data:image/jpg;base64,' + data
+                // make ajax request for product info
+                setTimeout(function () {
+                    // show product modal
+                    $('#new-product').modal('show');
+
+                    // hide loading indicator
+                    dimmer.classList.remove('active');
+                }, 1000);
+            }
+            else {
+                alert('No barcode detected');
+            }
+        }
+
+        Quagga.decodeSingle({
+            decoder: {
+                readers: [
+                    // order matters, upc is most common in the usa
+                    'upc_reader', 'upc_e_reader', 'ean_reader', 'ean_8_reader',
+                    'code_128_reader', 'code_39_reader', 'code_39_vin_reader',
+                    'codabar_reader', 'i2of5_reader',
+                ] // List of active readers
+            },
+            locate: true, // try to locate the barcode in the image
+            src: src // or 'data:image/jpg;base64,' + data
+        }, callback);
     };
 
-    function callback(result) {
-        if(result.codeResult) {
-            resultSpan.innerHTML = result.codeResult.code;
-        }
-        else {
-            resultSpan.innerHTML = 'no barcode detected';
-        }
-    }
+    // take picture using device camera and retrieve image as base64-encoded string
+    proto.capturePhoto = function () {
+        navigator.camera.getPicture(this.onPhotoDataSuccess, this.onCaptureFail, {
+            quality: 50,
+            destinationType: navigator.camera.DestinationType.DATA_URL
+        });
+    };
 
-    Quagga.decodeSingle(opts, callback);
-}
+    // image capture failed
+    proto.onCaptureFail = function (message) {
+        alert('Image capture failed because: ' + message);
+    };
 
-// // Called when a photo is successfully retrieved
-// // @param String imageURI Image file URI
-// function onPhotoURISuccess(imageURI) {
-//     var largeImage = document.getElementById('largeImage');
-//     largeImage.style.display = 'block';
-//     largeImage.src = imageURI;
-// }
+    return BarcodeReader;
 
-// Take picture using device camera and retrieve image as base64-encoded string
-function capturePhoto() {
-    navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-        quality: 50,
-        destinationType: destinationType.DATA_URL
-    });
-}
-
-// // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
-// function capturePhotoEdit() {
-//     navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-//         quality: 20,
-//         allowEdit: true,
-//         destinationType: destinationType.DATA_URL
-//     });
-// }
-
-// // Retrieve image file location from specified source
-// function getPhoto(source) {
-//     navigator.camera.getPicture(onPhotoURISuccess, onFail, {
-//         quality: 50,
-//         destinationType: destinationType.FILE_URI,
-//         sourceType: source
-//     });
-// }
-
-function onFail(message) {
-    alert('Image capture failed because: ' + message);
-}
+}(this, this.document, jQuery));

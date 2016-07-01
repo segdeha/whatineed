@@ -12,17 +12,20 @@
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
-    <description>
-        Your smart shopping list.
-    </description>
     <feature name="SplashScreen">
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
         <param name="onload" value="true" />
     </feature>
+    <description>
+        Smart shopping list.
+    </description>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
     <allow-intent href="market:*" />
     <name>WhatINeed</name>
     <description>
-        Smart shopping list.
+        Your smart shopping list.
     </description>
     <author email="andrew@pdxcodeguild.com" href="http://pdxcodeguild.com">
         PDX Code Guild
