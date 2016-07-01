@@ -154,19 +154,12 @@
         $('.menu .item').tab();
 
         document.querySelector('.active .list').addEventListener('click', function (evt) {
+            var src;
             if (evt.target.matches('.header') || evt.target.matches('.description')) {
                 // get image source from div.item[data-src]
-                var src = $(evt.target).parents('.item').attr('data-src');
-
-src = false
-
+                src = $(evt.target).parents('.item').attr('data-src') || 'img/default-image.png';
                 // set image source
-                if (src) {
-                    $('#product-info .image').attr('src', src);
-                }
-                else {
-                    src = 'img/default-image.png';
-                }
+                $('#product-info .image').attr('src', src);
                 // show modal
                 $('#product-info').modal('show');
             }
@@ -174,13 +167,14 @@ src = false
 
         document.querySelector('#new-product-button').addEventListener('click', capturePhoto);
 
+        var deviceReady = false;
+
         document.addEventListener("deviceready", function (evt) {
+            deviceReady = true;
             // picture source
             // var pictureSource = navigator.camera.PictureSourceType;
             // sets the format of returned value
             // destinationType = navigator.camera.DestinationType;
-
-            navigator.splashscreen.show();
         });
 
         var rangeInput = document.querySelector('[name="number-of-days"]');
@@ -243,10 +237,12 @@ src = false
 
     // take picture using device camera and retrieve image as base64-encoded string
     function capturePhoto() {
-        navigator.camera.getPicture(onPhotoDataSuccess, onCaptureFail, {
-            quality: 50,
-            destinationType: navigator.camera.DestinationType.DATA_URL
-        });
+        if (deviceReady) {
+            navigator.camera.getPicture(onPhotoDataSuccess, onCaptureFail, {
+                quality: 50,
+                destinationType: navigator.camera.DestinationType.DATA_URL
+            });
+        }
     }
 
     // image capture failed
