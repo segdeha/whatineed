@@ -1,22 +1,4 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
     <head>
         <!--
@@ -28,6 +10,7 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
+        <meta charset="utf-8">
         <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
@@ -36,12 +19,58 @@
         <title>Hello World</title>
     </head>
     <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+        <!-- tabs -->
+        <div class="ui top attached tabular menu">
+            <a class="item active" data-tab="first">Need</a>
+            <a class="item" data-tab="second">Done</a>
+        </div>
+
+        <!-- lists -->
+        <div class="ui bottom attached tab segment active" data-tab="first">
+            <div class="ui relaxed divided list"></div>
+            <button id="new-product-button"><img class="ui mini image" src="img/plus.png" alt=""></button>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="second">
+            <div class="ui relaxed divided list">
+                Done
             </div>
+        </div>
+
+        <!-- product info modal -->
+        <div id="product-info" class="ui large modal">
+            <div class="header">Trader Joe's Organic Peanut Butter</div>
+            <div class="content">
+                <p><img class="ui small centered image" src="img/default-image.png" alt=""></p>
+            </div>
+            <div class="actions">
+                <div class="ui left aligned segment">
+                    Last purchased <span id="last-purchased">12 days</span> ago
+                </div>
+                <div class="ui cancel button">Close</div>
+            </div>
+        </div>
+
+        <!-- loading indicator -->
+        <div class="ui dimmer"><!-- add `active` class to show -->
+            <div class="ui text loader"></div>
+        </div>
+
+        <!-- new product modal -->
+        <div id="new-product" class="ui large modal">
+            <div class="header">Confirm</div>
+            <div class="content">
+                <p><img class="ui small centered image" src="img/default-image.png" alt=""></p>
+                <div id="barcode-result"></div>
+            </div>
+            <div class="actions">
+                <div class="ui left aligned segment">
+                    <p>Estimated number of days to use it up: <span id="number-of-days"></span></p>
+                    <input type="range" name="number-of-days" min="1" max="30" value="7" step="1">
+                </div>
+                <div class="ui primary button">Save</div>
+                <div class="ui cancel button">Cancel</div>
+            </div>
+            <h1><a href="camera.html">Camera</a></h1>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>

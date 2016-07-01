@@ -1,0 +1,46 @@
+body {
+    margin: 1em;
+    padding: 0;
+}
+
+.list {
+    position: relative;
+}
+    .list .item {
+        border-top: none;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: transform 0.25s;
+    }
+
+.status {
+    border-radius: 9px;
+    display: inline-block;
+    float: right;
+    height: 18px;
+    margin-top: 6px;
+    width: 18px;
+}
+    .status.immediately {
+        background-color: red;
+    }
+    .status.soon {
+        background-color: #fc0;
+    }
+    .status.later {
+        background-color: green;
+    }
+    .status.inactive {
+        background-color: gray;
+    }
+
+.left-floated-checkbox {
+    float: left;
+    padding-top: 6px;
+}
+
+input[type=range] {
+    width: 100%;
+}
