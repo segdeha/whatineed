@@ -9,9 +9,11 @@ urlpatterns = [
     url(r'thing/(?P<barcode_number>[0-9]+)/', views.barcode ),
 
     # /people/<username>/list/need
+    # needs user authentication added
     url(r'people/(?P<username>\w+)/list/need', views.people_need),
 
     # /people/<username>/history/done
+    # needs user authentication added
     url(r'people/(?P<username>\w+)/list/done', views.people_done),
 
     # /people/<username>/history/purchased
