@@ -154,14 +154,6 @@
         $('.menu .item').tab();
 
         document.querySelector('.active .list').addEventListener('click', function (evt) {
-<<<<<<< HEAD
-            var src;
-            if (evt.target.matches('.header') || evt.target.matches('.description')) {
-                // get image source from div.item[data-src]
-                src = $(evt.target).parents('.item').attr('data-src') || 'img/default-image.png';
-                // set image source
-                $('#product-info .image').attr('src', src);
-=======
             if (evt.target.matches('.header') || evt.target.matches('.description')) {
                 // get image source from div.item[data-src]
                 var src = $(evt.target).parents('.item').attr('data-src');
@@ -172,7 +164,6 @@
                 else {
                     src = 'http://fieldofgreenspc.com/assets/img/produce.png';
                 }
->>>>>>> master
                 // show modal
                 $('#product-info').modal('show');
             }
@@ -180,14 +171,7 @@
 
         document.querySelector('#new-product-button').addEventListener('click', capturePhoto);
 
-<<<<<<< HEAD
-        var deviceReady = false;
-
         document.addEventListener("deviceready", function (evt) {
-            deviceReady = true;
-=======
-        document.addEventListener("deviceready", function (evt) {
->>>>>>> master
             // picture source
             // var pictureSource = navigator.camera.PictureSourceType;
             // sets the format of returned value
@@ -207,41 +191,15 @@
     // Called when a photo is successfully retrieved
     // @param String imageData base64-encoded image data
     function onPhotoDataSuccess(imageData) {
-        var dimmer = document.querySelector('.dimmer');
-<<<<<<< HEAD
-        var src = 'data:image/jpeg;base64,' + imageData;
-
-        // show loading indicator
-        dimmer.querySelector('.text').innerHTML = 'Deciphering barcode…';
-=======
-        var dimmerText = dimmer.querySelector('.text');
         var src = "data:image/jpeg;base64," + imageData;
 
         // show loading indicator
-        dimmerText.innerHTML = 'Deciphering barcode…';
->>>>>>> master
-        dimmer.classList.add('active');
+        document.querySelector('.dimmer').classList.add('active');
 
         function callback(result) {
             if(result.codeResult) {
-                // display barcode value
-                document.getElementById('barcode-result')
-                    .innerHTML = `Barcode value: ${result.codeResult.code}`;
-
-<<<<<<< HEAD
-                dimmer.querySelector('.text').innerHTML = 'Fetching product info…';
-=======
-                dimmerText.innerHTML = 'Fetching product info…';
->>>>>>> master
-
                 // make ajax request for product info
-                setTimeout(function () {
-                    // show product modal
-                    $('#new-product').modal('show');
-
-                    // hide loading indicator
-                    dimmer.classList.remove('active');
-                }, 1000);
+                $('#new-product').modal('show');
             }
             else {
                 alert('No barcode detected');
@@ -251,10 +209,9 @@
         Quagga.decodeSingle({
             decoder: {
                 readers: [
-                    // order matters, upc is most common in the usa
-                    'upc_reader', 'upc_e_reader', 'ean_reader', 'ean_8_reader',
-                    'code_128_reader', 'code_39_reader', 'code_39_vin_reader',
-                    'codabar_reader', 'i2of5_reader',
+                    'code_128_reader', 'ean_reader', 'ean_8_reader',
+                    'code_39_reader', 'code_39_vin_reader', 'codabar_reader',
+                    'upc_reader', 'upc_e_reader', 'i2of5_reader',
                 ] // List of active readers
             },
             locate: true, // try to locate the barcode in the image
@@ -266,19 +223,10 @@
 
     // take picture using device camera and retrieve image as base64-encoded string
     function capturePhoto() {
-<<<<<<< HEAD
-        if (deviceReady) {
-            navigator.camera.getPicture(onPhotoDataSuccess, onCaptureFail, {
-                quality: 50,
-                destinationType: navigator.camera.DestinationType.DATA_URL
-            });
-        }
-=======
         navigator.camera.getPicture(onPhotoDataSuccess, onCaptureFail, {
             quality: 50,
             destinationType: navigator.camera.DestinationType.DATA_URL
         });
->>>>>>> master
     }
 
     // image capture failed

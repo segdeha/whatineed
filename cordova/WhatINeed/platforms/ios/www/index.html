@@ -1,24 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
     <head>
-        <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-        Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
+        <!-- https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy -->
+        <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src * 'unsafe-inline'; media-src *">
         <meta charset="utf-8">
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+        <title>List</title>
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-        <title>Hello World</title>
+        <link rel="stylesheet" href="css/semantic.css">
+        <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         <div class="app">
             <h1>Apache Cordova</h1>
@@ -26,6 +20,8 @@
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
 =======
+=======
+>>>>>>> master
         <!-- tabs -->
         <div class="ui top attached tabular menu">
             <a class="item active" data-tab="first">Need</a>
@@ -35,7 +31,11 @@
         <!-- lists -->
         <div class="ui bottom attached tab segment active" data-tab="first">
             <div class="ui relaxed divided list"></div>
+<<<<<<< HEAD
             <button id="new-product-button"><img class="ui mini image" src="img/plus.png" alt=""></button>
+=======
+            <button id="new-product-button"><img class="ui mini image" src="https://cdn3.iconfinder.com/data/icons/watchify-v1-0/70/add-70px-128.png" alt=""></button>
+>>>>>>> master
         </div>
         <div class="ui bottom attached tab segment" data-tab="second">
             <div class="ui relaxed divided list">
@@ -47,7 +47,11 @@
         <div id="product-info" class="ui large modal">
             <div class="header">Trader Joe's Organic Peanut Butter</div>
             <div class="content">
+<<<<<<< HEAD
                 <p><img class="ui small centered image" src="img/default-image.png" alt=""></p>
+=======
+                <p><img class="ui small centered image" src="http://fieldofgreenspc.com/assets/img/produce.png" alt=""></p>
+>>>>>>> master
             </div>
             <div class="actions">
                 <div class="ui left aligned segment">
@@ -66,7 +70,11 @@
         <div id="new-product" class="ui large modal">
             <div class="header">Confirm</div>
             <div class="content">
+<<<<<<< HEAD
                 <p><img class="ui small centered image" src="img/default-image.png" alt=""></p>
+=======
+                <p><img class="ui small centered image" src="http://fieldofgreenspc.com/assets/img/produce.png" alt=""></p>
+>>>>>>> master
                 <div id="barcode-result"></div>
             </div>
             <div class="actions">
@@ -76,11 +84,17 @@
                 </div>
                 <div class="ui primary button">Save</div>
                 <div class="ui cancel button">Cancel</div>
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> master
             </div>
-            <h1><a href="camera.html">Camera</a></h1>
         </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+
+        <script src="cordova.js"></script>
+        <script src="js/jquery.js"></script>
+        <script src="js/semantic.js"></script>
+        <script src="js/quagga.js"></script>
+        <script src="js/behaviors.js"></script>
     </body>
 </html>

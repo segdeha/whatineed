@@ -2,7 +2,7 @@
 <widget id="io.cordova.whatineed" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>WhatINeed</name>
     <description>
-        Smart shopping list.
+        Your smart shopping list.
     </description>
     <author email="andrew@pdxcodeguild.com" href="http://pdxcodeguild.com">
         PDX Code Guild
