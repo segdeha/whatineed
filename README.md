@@ -42,9 +42,9 @@ follow its instructions and make sure you see the right message in your browser.
 
 ## Installing Cordova
 
-_Note: Instructions below are for OS X and iOS for now. Windows and Android “coming soon.”_
+_Note: Instructions below are for OS X/iOS for now. Windows/Android “coming soon.”_
 
-If you want to build the mobile app, you will need to install the `cordova` app.
+If you want to build the mobile app, you will need to install the [Cordova](https://cordova.apache.org) app.
 
     npm install -g cordova
 
