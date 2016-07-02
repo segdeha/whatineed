@@ -1,5 +1,5 @@
 /**
- * Camera
+ * BarcodeReader
  * @requires Quagga
  */
 var BarcodeReader = (function (window, document, $, undefined) {

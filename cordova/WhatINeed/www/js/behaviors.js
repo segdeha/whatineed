@@ -1,9 +1,7 @@
 (function (window, document, $, undefined) {
     'use strict';
 
-    console.log(ReorderableList, BarcodeReader);
-
-    function initLogin() {
+    function onDeviceReady() {
         $('.ui.form').form({
             fields: {
                 email: {
@@ -32,7 +30,6 @@
     }
 
     function initList() {
-
         var barcodeReader = new BarcodeReader();
         $('#new-product-button').on('click', barcodeReader.capturePhoto);
 
@@ -65,18 +62,12 @@
         });
 
         rangeValue.innerHTML = rangeInput.value;
-
     }
 
-    function init() {
-        initLogin();
+    function onDOMContentLoaded() {
+        document.addEventListener('deviceready', onDeviceReady);
     }
 
-    var deviceready;
-    document.addEventListener('deviceready', function (evt) {
-        deviceready = true;
-    });
-
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', onDOMContentLoaded);
 
 }(this, this.document, jQuery));
