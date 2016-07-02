@@ -26,19 +26,34 @@ var BarcodeReader = (function (window, document, $, undefined) {
                 document.getElementById('barcode-result')
                     .innerHTML = `Barcode value: ${result.codeResult.code}`;
 
+                // update status for the user
                 dimmer.querySelector('.text').innerHTML = 'Fetching product info…';
 
-                // make ajax request for product info
-                setTimeout(function () {
-                    // show product modal
-                    $('#new-product').modal('show');
+                $.getJSON(`http://17e5c9e7.ngrok.io/api/thing/${result.codeResult.code}/`, function (json) {
+                    window.requestAnimationFrame(function () {
+                        // preload the image before showing the modal
+                        var img = new Image();
+                        img.onload = function () {
+                            // set product info in modal
+                            $('#new-product .header').html(json.data.name);
+                            $('#new-product .content .image').attr('src', json.data.product_image);
 
-                    // hide loading indicator
-                    dimmer.classList.remove('active');
-                }, 1000);
+                            // hide loading indicator
+                            dimmer.classList.remove('active');
+
+                            // show product modal
+                            $('#new-product').modal('show');
+                        };
+                        img.src = json.data.product_image;
+                    });
+                });
             }
             else {
-                alert('No barcode detected');
+                // hide loading indicator
+                dimmer.classList.remove('active');
+                window.requestAnimationFrame(function () {
+                    alert('No barcode detected. Try again.');
+                });
             }
         }
 

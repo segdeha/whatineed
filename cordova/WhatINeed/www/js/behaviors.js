@@ -32,7 +32,7 @@
 
     function initList() {
         var barcodeReader = new BarcodeReader();
-        $('#new-product-button').on('click', barcodeReader.capturePhoto);
+        $('#new-product-button').on('click', barcodeReader.capturePhoto.bind(barcodeReader));
 
         var selector = '.active .list .item';
         // TODO fetch data from server
