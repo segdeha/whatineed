@@ -4,12 +4,12 @@
  */
 var ReorderableList = (function (window, document, $, undefined) {
 
-    'use strict';
+    // 'use strict'; // FIXME something here doesn’t agree with strict mode
 
     // from: http://stackoverflow.com/a/7180095/11577
     // TODO: find a way to do this without altering Array.prototype
     if ('function' !== typeof Array.prototype.move) {
-        Array.prototype.move = function(from, to) {
+        Array.prototype.move = function (from, to) {
             this.splice(to, 0, this.splice(from, 1)[0]);
         };
     }
@@ -109,7 +109,7 @@ var ReorderableList = (function (window, document, $, undefined) {
             this.items[0].parentNode.style.height = `${(this.itemHeight * this.items.length)}px`;
             function setTransform(id, idx) {
                 var item = document.querySelector(`[data-id="${id}"]`);
-                var rule = `translate3d(0, ${(idx * this.itemHeight)}px, 0)`;
+                var rule = `translate3d(0, ${idx * this.itemHeight}px, 0)`;
                 if (idx > 0) {
                     item.style.borderTop = '1px solid rgba(34, 36, 38, 0.15)';
                 }
