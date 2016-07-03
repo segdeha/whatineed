@@ -14,8 +14,11 @@ var ReorderableList = (function (window, document, $, undefined) {
         };
     }
 
-    function ReorderableList(selector, data) {
-        this.selector = selector;
+    /**
+     * @constructor
+     */
+    function ReorderableList(selectors, data) {
+        this.selectors = selectors;
         this.data = data;
         // create an array to hold the item ids (populated by render)
         this.ids = [];
@@ -58,11 +61,11 @@ var ReorderableList = (function (window, document, $, undefined) {
         }
 
         this.data.forEach(buildItem.bind(this));
-        $('.active .list').html(html);
+        $(this.selectors.list).html(html);
 
         function postInsertion() {
             // grab all of the list items from the dom, cast as an array
-            this.items = Array.prototype.slice.call(document.querySelectorAll(this.selector));
+            this.items = Array.prototype.slice.call(document.querySelectorAll(this.selectors.items));
             // get height of any 1 item
             this.itemHeight = parseInt(window.getComputedStyle(this.items[0], null).getPropertyValue('height'), 10);
             // reorder the items
@@ -73,31 +76,6 @@ var ReorderableList = (function (window, document, $, undefined) {
 
         // get the items after they’ve been inserted into the dom
         window.requestAnimationFrame(postInsertion.bind(this))
-    };
-
-    proto.initCheckboxes = function () {
-        var self = this;
-        $('.active .checkbox').checkbox({
-            onChecked: function() {
-                var id = self.getIdFromInput(this);
-                // move the item to the end of the array
-                var idx = self.ids.indexOf(id);
-                self.ids.move(idx, self.ids.length - 1);
-                // reorder items in the ui
-                self.reorder();
-                // save new state to server
-            },
-            onUnchecked: function() {
-                var id = self.getIdFromInput(this);
-                // move the item to the beginning of the array
-                // TODO: move the item to the previous position?
-                var idx = self.ids.indexOf(id);
-                self.ids.move(idx, 0);
-                // reorder items in the ui
-                self.reorder();
-                // save new state to server
-            }
-        });
     };
 
     /**
@@ -122,6 +100,43 @@ var ReorderableList = (function (window, document, $, undefined) {
         }
     };
 
+    /**
+     * Activate checkboxes
+     */
+    proto.initCheckboxes = function () {
+        var self = this;
+        $('.active .checkbox').checkbox({
+            onChecked: function() {
+                var id = self.getIdFromInput(this);
+
+                // move the item to the end of the array
+                var idx = self.ids.indexOf(id);
+                self.ids.move(idx, self.ids.length - 1);
+
+                // reorder items in the ui
+                self.reorder();
+
+                // TODO save new state to server
+            },
+            onUnchecked: function() {
+                var id = self.getIdFromInput(this);
+
+                // move the item to the beginning of the array
+                // TODO: move the item to the previous position?
+                var idx = self.ids.indexOf(id);
+                self.ids.move(idx, 0);
+
+                // reorder items in the ui
+                self.reorder();
+
+                // TODO save new state to server
+            }
+        });
+    };
+
+    /**
+     * Get the DB ID for an item from the <input>
+     */
     proto.getIdFromInput = function (input) {
         return $(input).parents('.item').attr('data-id');
     };

@@ -2,6 +2,9 @@
 
     'use strict';
 
+    // update whenever ngrok is restarted
+    window.BASEURL = 'http://17e5c9e7.ngrok.io';
+
     function onDeviceReady() {
         $('.ui.form').form({
             fields: {
@@ -34,12 +37,20 @@
         var barcodeReader = new BarcodeReader();
         $('#new-product-button').on('click', barcodeReader.capturePhoto.bind(barcodeReader));
 
-        var selector = '.active .list .item';
-        // TODO fetch data from server
-        $.getJSON('js/_data.json', function (data) {
-            var list = new ReorderableList(selector, data);
-            list.render();
-        });
+        function getList() {
+            var selectors = {
+                list: '.active .list',
+                items: '.active .list .item'
+            };
+            // TODO fetch data from server
+            var getting = $.getJSON(`${BASEURL}/static/_data.json`);
+            getting.done(function (data) {
+                var list = new ReorderableList(selectors, data);
+                list.render();
+            });
+        }
+
+        getList();
 
         $('.menu .item').tab();
 
@@ -53,6 +64,20 @@
                 // show modal
                 $('#product-info').modal('show');
             }
+        });
+
+        $('#new-product .primary.button').click(function (evt) {
+            this.classList.add('loading');
+            var barcode = document.getElementById('barcode-result').innerHTML;
+            // TODO make ajax request to save product as a thing this user buys
+            var posting = $.post({
+                url: `${BASEURL}/api/thing`,
+                data: { barcode: barcode }
+            });
+            posting.done(function (json) {
+                // thing saved successfully, get refreshed list
+                getList();
+            });
         });
 
         var rangeInput = document.querySelector('[name="number-of-days"]');

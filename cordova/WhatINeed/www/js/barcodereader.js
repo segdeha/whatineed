@@ -6,12 +6,17 @@ var BarcodeReader = (function (window, document, $, undefined) {
 
     'use strict';
 
+    /**
+     * @constructor
+     */
     function BarcodeReader() {}
 
     var proto = BarcodeReader.prototype;
 
-    // Called when a photo is successfully retrieved
-    // @param String imageData base64-encoded image data
+    /**
+     * Called when a photo is successfully retrieved
+     * @param String imageData base64-encoded image data
+     */
     proto.onPhotoDataSuccess = function (imageData) {
         var dimmer = document.querySelector('.dimmer');
         var src = 'data:image/jpeg;base64,' + imageData;
@@ -24,12 +29,12 @@ var BarcodeReader = (function (window, document, $, undefined) {
             if(result.codeResult) {
                 // display barcode value
                 document.getElementById('barcode-result')
-                    .innerHTML = `Barcode value: ${result.codeResult.code}`;
+                    .innerHTML = result.codeResult.code;
 
                 // update status for the user
                 dimmer.querySelector('.text').innerHTML = 'Fetching product info…';
 
-                $.getJSON(`http://17e5c9e7.ngrok.io/api/thing/${result.codeResult.code}/`, function (json) {
+                $.getJSON(`${BASEURL}/api/thing/${result.codeResult.code}/`, function (json) {
                     window.requestAnimationFrame(function () {
                         // preload the image before showing the modal
                         var img = new Image();
@@ -71,7 +76,9 @@ var BarcodeReader = (function (window, document, $, undefined) {
         }, callback);
     };
 
-    // take picture using device camera and retrieve image as base64-encoded string
+    /**
+     * Take picture using device camera and retrieve image as base64-encoded string
+     */
     proto.capturePhoto = function () {
         navigator.camera.getPicture(this.onPhotoDataSuccess, this.onCaptureFail, {
             quality: 50,
@@ -79,7 +86,9 @@ var BarcodeReader = (function (window, document, $, undefined) {
         });
     };
 
-    // image capture failed
+    /**
+     * Called if image capture fails
+     */
     proto.onCaptureFail = function (message) {
         alert('Image capture failed because: ' + message);
     };
