@@ -51,7 +51,7 @@ var BarcodeReader = (function (window, document, $, undefined) {
 
                 $.getJSON(`${BASEURL}/api/thing/${result.codeResult.code}/`, function (json) {
                     json.data = json.data || {
-                        name: 'Unknown Barcode',
+                        name: 'Unknown Product',
                         product_image: 'img/default-image.png'
                     };
                     // preload the image before showing the modal
