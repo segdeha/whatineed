@@ -42,12 +42,13 @@ follow its instructions and make sure you see the right message in your browser.
 
 ## Installing Cordova
 
-_Note: Instructions below are for OS X/iOS for now. Windows/Android “coming soon.”_
+To get our app running on the iOS simulator, do the following:
 
-If you want to build the mobile app, you will need to install the [Cordova](https://cordova.apache.org) app.
+1. `npm install -g cordova` (or, if that fails `sudo npm install -g cordova`)
+1. `cordova emulate ios`
 
-    npm install -g cordova
+To build a new Cordova app from scratch, follow [these instructions](https://github.com/segdeha/whatineed/blob/master/CORDOVA.md).
 
-To run the app on the iOS simulator, you first need to install [Xcode](https://itunes.apple.com/us/app/xcode/id497799835?mt=12), then `cd` into `cordova/WhatINeed` then run the following command:
+To get our app running on an iOS device (i.e. your phone), you will need to be registered as an [Apple Developer](https://developer.apple.com/), then obtain a [provisioning profile](http://stackoverflow.com/questions/3362652/what-is-a-provisioning-profile-used-for-when-developing-iphone-applications) for your device.
 
-    cordova run ios
+I haven’t been able to get the app running yet on Android. 😕
