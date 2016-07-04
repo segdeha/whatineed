@@ -130,7 +130,7 @@ We’re ready to build the app, but I found it was easier to set up the followin
 - `alias cordios='cordova run ios'`
 - `alias cordand='cordova run android'`
 
-_Note: I have `cordemu` set up to target the emulator in a mode that matches my phone. You can launch it this way and change the device using the “Hardware > Device” menu in the simulator app._
+_Note: I have `cordsim` set up to target the emulator in a mode that matches my phone. You can launch it this way and change the device using the “Hardware > Device” menu in the simulator app._
 
 ------
 
