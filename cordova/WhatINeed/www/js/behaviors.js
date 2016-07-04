@@ -1,3 +1,4 @@
+/* jshint esversion: 6 */
 (function (window, document, $, undefined) {
 
     'use strict';

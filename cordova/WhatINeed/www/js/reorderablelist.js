@@ -1,3 +1,4 @@
+/* jshint esversion: 6 */
 /**
  * Create a reorderable list of items
  * @requires jQuery
@@ -75,27 +76,27 @@ var ReorderableList = (function (window, document, $, undefined) {
         }
 
         // get the items after they’ve been inserted into the dom
-        window.requestAnimationFrame(postInsertion.bind(this))
+        window.requestAnimationFrame(postInsertion.bind(this));
     };
 
     /**
      * Reorder a previously rendered list
      */
     proto.reorder = function () {
+        function setTransform(id, idx) {
+            var item = document.querySelector(`[data-id="${id}"]`);
+            var rule = `translate3d(0, ${idx * this.itemHeight}px, 0)`;
+            if (idx > 0) {
+                item.style.borderTop = '1px solid rgba(34, 36, 38, 0.15)';
+            }
+            else {
+                item.style.borderTop = 'none';
+            }
+            item.style.transform = rule;
+        }
         // set height of container
         if (this.items.length > 0) {
             this.items[0].parentNode.style.height = `${(this.itemHeight * this.items.length)}px`;
-            function setTransform(id, idx) {
-                var item = document.querySelector(`[data-id="${id}"]`);
-                var rule = `translate3d(0, ${idx * this.itemHeight}px, 0)`;
-                if (idx > 0) {
-                    item.style.borderTop = '1px solid rgba(34, 36, 38, 0.15)';
-                }
-                else {
-                    item.style.borderTop = 'none';
-                }
-                item.style.transform = rule;
-            }
             this.ids.forEach(setTransform.bind(this));
         }
     };
