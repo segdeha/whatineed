@@ -1,10 +1,11 @@
 /**
  * BarcodeReader
  * @requires Quagga
+ * @requires jQuery
  */
 var BarcodeReader = (function (window, document, $, undefined) {
 
-    'use strict';
+    // 'use strict'; // FIXME something here doesn’t agree with strict mode
 
     /**
      * @constructor
@@ -19,50 +20,64 @@ var BarcodeReader = (function (window, document, $, undefined) {
      */
     proto.onPhotoDataSuccess = function (imageData) {
         var dimmer = document.querySelector('.dimmer');
-        var src = 'data:image/jpeg;base64,' + imageData;
 
         // show loading indicator
         dimmer.querySelector('.text').innerHTML = 'Deciphering barcode…';
         dimmer.classList.add('active');
 
         function callback(result) {
-            if(result.codeResult) {
-                // display barcode value
-                document.getElementById('barcode-result')
-                    .innerHTML = result.codeResult.code;
+            // clear the 10 second timeout
+            clearTimeout(timeout);
 
+            function displayProductModal(data) {
+                // display barcode value
+                $('#barcode-result').html(result.codeResult.code);
+
+                // set product info in modal
+                $('#new-product .header').html(data.name);
+                $('#new-product .content .image').attr('src', data.product_image);
+
+                // hide loading indicator
+                dimmer.classList.remove('active');
+
+                // show product modal
+                $('#new-product').modal('show');
+            }
+
+            if(result.codeResult) {
                 // update status for the user
                 dimmer.querySelector('.text').innerHTML = 'Fetching product info…';
 
                 $.getJSON(`${BASEURL}/api/thing/${result.codeResult.code}/`, function (json) {
-                    window.requestAnimationFrame(function () {
-                        // preload the image before showing the modal
-                        var img = new Image();
-                        img.onload = function () {
-                            // set product info in modal
-                            $('#new-product .header').html(json.data.name);
-                            $('#new-product .content .image').attr('src', json.data.product_image);
-
-                            // hide loading indicator
-                            dimmer.classList.remove('active');
-
-                            // show product modal
-                            $('#new-product').modal('show');
-                        };
-                        img.src = json.data.product_image;
-                    });
+                    json.data = json.data || {
+                        name: 'Unknown Barcode',
+                        product_image: 'img/default-image.png'
+                    };
+                    // preload the image before showing the modal
+                    var img = new Image();
+                    img.onload = function () {
+                        displayProductModal(json.data);
+                    };
+                    img.src = json.data.product_image;
                 });
             }
             else {
-                // hide loading indicator
-                dimmer.classList.remove('active');
-                window.requestAnimationFrame(function () {
-                    alert('No barcode detected. Try again.');
-                });
+                noBarcode();
             }
         }
 
+        function noBarcode() {
+            // hide loading indicator
+            dimmer.classList.remove('active');
+            // put this in a RAF so the dimmer can hide before the alert shows
+            window.requestAnimationFrame(function () {
+                alert('No barcode detected. Try again.');
+            });
+        }
+
         Quagga.decodeSingle({
+            src: `data:image/jpeg;base64,${imageData}`,
+            numOfWorkers: 2,
             decoder: {
                 readers: [
                     // order matters, upc is most common in the usa
@@ -72,8 +87,13 @@ var BarcodeReader = (function (window, document, $, undefined) {
                 ] // List of active readers
             },
             locate: true, // try to locate the barcode in the image
-            src: src // or 'data:image/jpg;base64,' + data
         }, callback);
+
+        // stop trying to decipher the barcode after 10 seconds
+        var timeout = setTimeout(function () {
+            Quagga.stop();
+            noBarcode();
+        }, 10000);
     };
 
     /**
