@@ -113,7 +113,15 @@ The following optional plugin will give you access to information about the envi
 
 ------
 
-## Step 9: Set up aliases (optional)
+## Step 9: Add status bar control (optional)
+
+The following optional plugin will give you control over the appearance of the status bar ([more info here](https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-statusbar/)):
+
+    cordova plugin add cordova-plugin-statusbar
+
+------
+
+## Step 10: Set up aliases (optional)
 
 We’re ready to build the app, but I found it was easier to set up the following aliases in my `~/.aliases` file first:
 
@@ -126,7 +134,7 @@ _Note: I have `cordemu` set up to target the emulator in a mode that matches my 
 
 ------
 
-## Step 10: Run it!
+## Step 11: Run it!
 
 Try building the app! I recommend building it to the iOS simulator or Android emulator first.
 
@@ -137,6 +145,6 @@ _Note: I haven’t yet been able to get Cordova to build to the Android emulator
 
 ------
 
-## Steps 11 thru ∞: Build your app
+## Steps 12 thru ∞: Build your app
 
 Now that the app builds and runs, you can start futzing (that’s a technical term) with the assets in the `www` folder to make it what you want.
