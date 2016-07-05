@@ -29,27 +29,35 @@
             evt.preventDefault();
             if (null === document.querySelector('.field.error')) {
                 // TODO make ajax call to authenticate, then do the below
-                var username = $('#login [name=username]').val();
-                var password = $('#login [name=password]').val();
+                var username = $('#login [name=username]');
+                var password = $('#login [name=password]');
 
-console.log(username, password);
+                // hide the keyboard
+                username.blur();
+                password.blur();
 
                 var posting = $.post({
                     url: `${BASEURL}/login/`,
                     data: {
-                        username: username,
-                        password: password
+                        username: username.val(),
+                        password: password.val()
                     },
                     dataType: 'json'
                 });
-                posting.done(function (data) {
+                posting.done(function (json) {
 
-console.log(data);
+console.log(json);
 
-                    $('#login').fadeOut(250, function () {
-                        $('#lists').addClass('show');
-                        window.requestAnimationFrame(initList);
-                    });
+                    if (json.data && json.data.is_registered) {
+                        $('#login').fadeOut(250, function () {
+                            $('#lists').addClass('show');
+                            window.requestAnimationFrame(initList);
+                        });
+                    }
+                    else {
+                        alert('Invalid login. Try again.');
+                    }
+
                 });
             }
         });
