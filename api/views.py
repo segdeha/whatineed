@@ -88,14 +88,18 @@ def people_purchase(request,username,barcode_number):
 
 # Login authentication
 def login(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        #return JSON Success
-        json_object = {'data': {'user':username, 'is_registered' : True}}
-        return JsonResponse(json_object)
-    else:
-        #return JSON Failure
-        json_object = { 'errors' : { 'title': 'User Not Found', 'detail': 'user not registered'} }
+    try:
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            #return JSON Success
+            json_object = {'data': {'user':username, 'is_registered' : True}}
+            return JsonResponse(json_object)
+        else:
+            #return JSON Failure
+            json_object = { 'errors' : { 'title': 'User Not Found', 'detail': 'user not registered'} }
+            return JsonResponse(json_object)
+    except:
+        json_object = {'errors':{'title' : 'No Post Data', 'detail' : 'there was no post data in your request'}}
         return JsonResponse(json_object)
