@@ -27,10 +27,14 @@
         });
 
         $('.ui.form').submit(function (evt) {
-            $('#login').fadeOut(250, function () {
-                $('#lists').addClass('show');
-                window.requestAnimationFrame(initList);
-            });
+            evt.preventDefault();
+            if (null === document.querySelector('.field.error')) {
+                // TODO make ajax call to authenticate, then do the below
+                $('#login').fadeOut(250, function () {
+                    $('#lists').addClass('show');
+                    window.requestAnimationFrame(initList);
+                });
+            }
         });
     }
 
