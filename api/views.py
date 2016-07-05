@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse,HttpResponse
 from django.db.models import lookups
+from django.contrib.auth import authenticate, login
 from web.models import Thing
 import datetime # not sure if this is needed
 
@@ -84,3 +85,17 @@ def people_usage(request,username,barcode_number):
 #
 def people_purchase(request,username,barcode_number):
     pass
+
+# Login authentication
+def login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        #return JSON Success
+        json_object = {'data': {'user':username, 'is_registered' : True}}
+        return JsonResponse(json_object)
+    else:
+        #return JSON Failure
+        json_object = { 'errors' : { 'title': 'User Not Found', 'detail': 'user not registered'} }
+        return JsonResponse(json_object)
