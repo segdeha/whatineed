@@ -114,6 +114,13 @@ var ReorderableList = (function (window, document, $, undefined) {
                 var idx = self.ids.indexOf(id);
                 self.ids.move(idx, self.ids.length - 1);
 
+                // change class name to 'later'
+                $(this)
+                    .parents('.checkbox')
+                    .siblings('.status')
+                    .removeClass()
+                    .addClass('status later');
+
                 // reorder items in the ui
                 self.reorder();
 
@@ -126,6 +133,13 @@ var ReorderableList = (function (window, document, $, undefined) {
                 // TODO: move the item to the previous position?
                 var idx = self.ids.indexOf(id);
                 self.ids.move(idx, 0);
+
+                // change class name to 'immediately'
+                $(this)
+                    .parents('.checkbox')
+                    .siblings('.status')
+                    .removeClass()
+                    .addClass('status immediately');
 
                 // reorder items in the ui
                 self.reorder();
