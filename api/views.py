@@ -93,7 +93,7 @@ def login(request):
     user = authenticate(username=username, password=password)
     if user is not None:
         #return JSON Success
-        json_object = {'data': {'user':username, 'is_registered' = True}}
+        json_object = {'data': {'user':username, 'is_registered' : True}}
         return JsonResponse(json_object)
     else:
         #return JSON Failure
