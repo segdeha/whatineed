@@ -27,7 +27,7 @@ def purchase(request):
     pass
 
 def things_list(request, user_id):
-    data = dict(Thing.objects.filter(owner_id = user_id).values().first())
+    data = dict(Thing.objects.filter(owner_id = user_id, consumed_date = None).values().first())
     json_object = {'data':data}
     return JsonResponse(json_object)
 
