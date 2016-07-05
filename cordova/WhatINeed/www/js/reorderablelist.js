@@ -38,6 +38,25 @@ var ReorderableList = (function (window, document, $, undefined) {
     var proto = ReorderableList.prototype;
 
     /**
+     * Fetch results to display in the list
+     * @static
+     * @requires window.BASEURL and window.USERID to be set
+     */
+    proto.fetch = function () {
+        var selectors = {
+            list: '.active .list',
+            items: '.active .list .item'
+        };
+        // TODO fetch data from server
+        // var getting = $.getJSON(`${BASEURL}/things/${USERID}/`);
+        var getting = $.getJSON(`${BASEURL}/static/_data.json`);
+        getting.done(function (data) {
+            var list = new ReorderableList(selectors, data);
+            list.render();
+        });
+    };
+
+    /**
      * Render a list
      */
     proto.render = function () {
@@ -125,6 +144,17 @@ var ReorderableList = (function (window, document, $, undefined) {
                 self.reorder();
 
                 // TODO save new state to server
+                // var posting = $.post({
+                //     url: `${BASEURL}/api/purchase/`,
+                //     data: {
+                //         user_id: USERID,
+                //         thing_id: id
+                //     }
+                // });
+                // posting.done(function (json) {
+                //     // thing saved successfully, get refreshed list
+                //     ReorderableList.prototype.fetch();
+                // });
             },
             onUnchecked: function() {
                 var id = self.getIdFromInput(this);
@@ -145,6 +175,17 @@ var ReorderableList = (function (window, document, $, undefined) {
                 self.reorder();
 
                 // TODO save new state to server
+                // var posting = $.post({
+                //     url: `${BASEURL}/api/purchase/`,
+                //     data: {
+                //         user_id: USERID,
+                //         thing_id: id
+                //     }
+                // });
+                // posting.done(function (json) {
+                //     // thing saved successfully, get refreshed list
+                //     ReorderableList.prototype.fetch();
+                // });
             }
         });
     };

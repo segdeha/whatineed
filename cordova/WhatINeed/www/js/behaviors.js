@@ -49,6 +49,9 @@
 console.log(json);
 
                     if (json.data && json.data.is_registered) {
+                        // set USERID globally
+                        window.USERID = json.data.user_id;
+
                         $('#login').fadeOut(250, function () {
                             $('#lists').addClass('show');
                             window.requestAnimationFrame(initList);
@@ -67,22 +70,9 @@ console.log(json);
         var barcodeReader = new BarcodeReader();
         $('#new-product-button').on('click', barcodeReader.capturePhoto.bind(barcodeReader));
 
-        function getList() {
-            var selectors = {
-                list: '.active .list',
-                items: '.active .list .item'
-            };
-            // TODO fetch data from server
-            var getting = $.getJSON(`${BASEURL}/static/_data.json`);
-            getting.done(function (data) {
-                var list = new ReorderableList(selectors, data);
-                list.render();
-            });
-        }
+        ReorderableList.prototype.fetch();
 
-        getList();
-
-        $('.menu .item').tab();
+        // $('.menu .item').tab();
 
         $('.active .list').on('click', function (evt) {
             var src;
@@ -94,20 +84,6 @@ console.log(json);
                 // show modal
                 $('#product-info').modal('show');
             }
-        });
-
-        $('#new-product .primary.button').click(function (evt) {
-            this.classList.add('loading');
-            var barcode = document.getElementById('barcode-result').innerHTML;
-            // TODO make ajax request to save product as a thing this user buys
-            var posting = $.post({
-                url: `${BASEURL}/api/thing`,
-                data: { barcode: barcode }
-            });
-            posting.done(function (json) {
-                // thing saved successfully, get refreshed list
-                getList();
-            });
         });
 
         var rangeInput = document.querySelector('[name="number-of-days"]');

@@ -31,6 +31,9 @@ var BarcodeReader = (function (window, document, $, undefined) {
             clearTimeout(timeout);
 
             function displayProductModal(data) {
+
+console.log(data);
+
                 // display barcode value
                 $('#barcode-result').html(result.codeResult.code);
 
@@ -43,6 +46,22 @@ var BarcodeReader = (function (window, document, $, undefined) {
 
                 // show product modal
                 $('#new-product').modal('show');
+
+                $('#new-product .primary.button').click(function (evt) {
+                    this.classList.add('loading');
+                    var barcode = document.getElementById('barcode-result').innerHTML;
+                    var posting = $.post({
+                        url: `${BASEURL}/api/thing/add/`,
+                        data: {
+                            user_id: USERID,
+                            thing_id: data.id
+                        }
+                    });
+                    posting.done(function (json) {
+                        // thing saved successfully, get refreshed list
+                        ReorderableList.prototype.fetch();
+                    });
+                });
             }
 
             if(result.codeResult) {
