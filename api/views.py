@@ -3,6 +3,7 @@ from django.http import JsonResponse,HttpResponse
 from django.db.models import lookups
 from django.contrib.auth import authenticate, login
 from web.models import Thing
+from django.contrib.auth.models import User
 import datetime # not sure if this is needed
 
 # Create your views here.
@@ -94,7 +95,8 @@ def login(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             #return JSON Success
-            json_object = {'data': {'user':username, 'is_registered' : True}}
+            user_object = User.objects.get(username=username)
+            json_object = {'data': {'user':user_object}}
             return JsonResponse(json_object)
         else:
             #return JSON Failure
