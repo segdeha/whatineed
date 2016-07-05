@@ -45,6 +45,7 @@ follow its instructions and make sure you see the right message in your browser.
 To get our app running on the iOS simulator, do the following:
 
 1. `npm install -g cordova` (or, if that fails `sudo npm install -g cordova`)
+1. `cordova platform add ios` (or `cordova platform add android`)
 1. `cordova emulate ios`
 
 To build a new Cordova app from scratch, follow [these instructions](https://github.com/segdeha/whatineed/blob/master/CORDOVA.md).
