@@ -18,16 +18,6 @@ class Thing(models.Model):  #Things you will need to have to replenish in the ho
     barcode = models.CharField(max_length=32, validators=[MaxLengthValidator(32)], blank=True)
 
 
-# class People(models.Model):  #People who are logged in to use the applications features
-#     name = models.CharField(max_length=255, validators=[MaxLengthValidator(255)], blank=False)
-#     created_date = models.DateTimeField(auto_now_add=True)
-#     last_modified_date = models.DateTimeField(auto_now=True)
-#     username = models.CharField(max_length=32, validators=[MaxLengthValidator(32)], blank=False)
-#     password = models.CharField(max_length=255, validators=[MinLengthValidator(6), MaxLengthValidator(255)], blank=False)
-#     number_in_household = models.PositiveSmallIntegerField(default=1, blank=False)
-#     email = models.EmailField(blank=False)
-
-
 class Purchase(models.Model):
 
     STATES = (

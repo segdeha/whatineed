@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse,HttpResponse
 from django.db.models import lookups
 from django.contrib.auth import authenticate, login
-from web.models import Thing
+from web.models import Thing, Purchase
 from django.contrib.auth.models import User
 import datetime # not sure if this is needed
 
@@ -27,7 +27,9 @@ def purchase(request):
     pass
 
 def things_list(request, user_id):
-    pass
+    data = dict(Thing.objects.filter(owner_id = user_id).values().first())
+    json_object = {'data':data}
+    return JsonResponse(json_object)
 
 # Login authentication
 def login(request):
