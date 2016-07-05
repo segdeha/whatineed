@@ -1,6 +1,8 @@
 <!doctype html>
 <html>
     <head>
+        <!-- update whenever ngrok is restarted -->
+        <base href="http://17e5c9e7.ngrok.io">
         <!-- https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy -->
         <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src * 'unsafe-inline'; media-src *">
         <meta charset="utf-8">
@@ -12,7 +14,7 @@
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
-        <div id="login" class="ui middle aligned center aligned grid">
+        <div id="login" class="ui middle aligned center aligned grid hide">
             <div class="column">
                 <h2 class="ui image header">
                     <img src="img/whatineed-logo.png" class="small image" alt="">
@@ -20,7 +22,7 @@
                         What I need…
                     </div>
                 </h2>
-                <form class="ui large form" action="/login" method="POST">
+                <form class="ui large form" action="" method="POST">
                     <div class="ui segment">
                         <div class="field">
                             <div class="ui left icon input">
@@ -41,7 +43,7 @@
             </div>
         </div>
 
-        <div id="lists" class="ui container">
+        <div id="lists" class="ui container show">
             <!-- branding -->
             <h1>What I need…</h1>
 
