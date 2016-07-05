@@ -45,10 +45,7 @@
                     dataType: 'json'
                 });
                 posting.done(function (json) {
-
-console.log(json);
-
-                    if (json.data && json.data.is_registered) {
+                    if (json.data && json.data.user_id) {
                         // set USERID globally
                         window.USERID = json.data.user_id;
 
@@ -60,7 +57,6 @@ console.log(json);
                     else {
                         alert('Invalid login. Try again.');
                     }
-
                 });
             }
         });

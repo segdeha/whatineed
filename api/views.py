@@ -36,7 +36,7 @@ def login(request):
         password = request.POST['password']
         user = authenticate(username=username, password=password).__dict__
         user_id = user['id']
-        json_object = {'data':user_id}
+        json_object = {'data':{'user_id':user_id}}
         return JsonResponse(json_object)
     except:
         json_object = {'errors':{'title' : 'No Post Data', 'detail' : 'there was no post data in your request'}}
