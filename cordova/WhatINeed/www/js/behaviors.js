@@ -58,6 +58,9 @@
                         alert('Invalid login. Try again.');
                     }
                 });
+                posting.fail(function (json) {
+                    alert('Login failed. Try again.');
+                });
             }
         });
     }

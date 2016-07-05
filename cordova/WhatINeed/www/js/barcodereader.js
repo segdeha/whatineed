@@ -31,6 +31,7 @@ var BarcodeReader = (function (window, document, $, undefined) {
             clearTimeout(timeout);
 
             function displayProductModal(data) {
+                var number_of_days = document.querySelector('[name="number-of-days"]');
 
 console.log(data);
 
@@ -49,19 +50,41 @@ console.log(data);
 
                 $('#new-product .primary.button').click(function (evt) {
                     this.classList.add('loading');
-                    var barcode = document.getElementById('barcode-result').innerHTML;
+                    var barcode  = document.getElementById('barcode-result').innerHTML;
+                    var postData = {
+                        user_id: USERID,
+                        thing_id: data.id,
+                        purchase_id: null,
+                        action: 'create',
+                        estimated_number_of_days: number_of_days.value
+                    };
+
+console.log(data);
+
                     var posting = $.post({
-                        url: `${BASEURL}/api/thing/add/`,
-                        data: {
-                            user_id: USERID,
-                            thing_id: data.id,
-                            purchase_id: null,
-                            action: 'create'
-                        }
+                        url: `${BASEURL}/api/purchase/`,
+                        data: postData
                     });
                     posting.done(function (json) {
+
+console.log('done', json);
+
+                        // close modal
+                        $('#new-product').modal('hide');
+                        // reset estimated number of days back to default-image
+                        number_of_days.value = 7;
                         // thing saved successfully, get refreshed list
                         ReorderableList.prototype.fetch();
+                    });
+                    posting.fail(function (json) {
+
+console.log('fail', json);
+
+                        // close modal
+                        $('#new-product').modal('hide');
+                        window.requestAnimationFrame(function () {
+                            alert('Adding product failed. Try again.');
+                        });
                     });
                 });
             }

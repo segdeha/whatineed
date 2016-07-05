@@ -48,8 +48,8 @@ var ReorderableList = (function (window, document, $, undefined) {
             items: '.active .list .item'
         };
         // TODO fetch data from server
-        // var getting = $.getJSON(`${BASEURL}/things/${USERID}/`);
-        var getting = $.getJSON(`${BASEURL}/static/_data.json`);
+        var getting = $.getJSON(`${BASEURL}/api/things/${USERID}/`);
+        // var getting = $.getJSON(`${BASEURL}/static/_data.json`);
         getting.done(function (data) {
             var list = new ReorderableList(selectors, data);
             list.render();
@@ -102,7 +102,7 @@ var ReorderableList = (function (window, document, $, undefined) {
      */
     proto.reorder = function () {
         function setTransform(id, idx) {
-            var item = document.querySelector(`[data-id="${id}"]`);
+            var item = document.querySelector(`[data-thing-id="${id}"]`);
             var rule = `translate3d(0, ${idx * this.itemHeight}px, 0)`;
             if (idx > 0) {
                 item.style.borderTop = '1px solid rgba(34, 36, 38, 0.15)';
@@ -157,6 +157,9 @@ var ReorderableList = (function (window, document, $, undefined) {
                 //     // thing saved successfully, get refreshed list
                 //     ReorderableList.prototype.fetch();
                 // });
+                // posting.fail(function (json) {
+                //     alert('Saving purchase failed. Try again.');
+                // });
             },
             onUnchecked: function() {
                 var thing_id    = self.getThingIdFromInput(this);
@@ -190,6 +193,9 @@ var ReorderableList = (function (window, document, $, undefined) {
                 // posting.done(function (json) {
                 //     // thing saved successfully, get refreshed list
                 //     ReorderableList.prototype.fetch();
+                // });
+                // posting.fail(function (json) {
+                //     alert('Saving purchase failed. Try again.');
                 // });
             }
         });

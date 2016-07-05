@@ -7,7 +7,7 @@ urlpatterns = [
 
     # /thing/barcodenumber -> json object for unique thing
     url(r'thing/(?P<barcode_number>[0-9]+)', views.barcode ),
-    url(r'thing/(?P<user_id>\w+)', views.things_list),
+    url(r'things/(?P<user_id>\w+)', views.things_list),
     url(r'purchase', views.purchase)
 
 ]
