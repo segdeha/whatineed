@@ -10,10 +10,9 @@
         $('.ui.form').form({
             fields: {
                 email: {
-                    identifier  : 'email',
+                    identifier  : 'username',
                     rules: [
-                        { type : 'empty', prompt : 'Enter your e-mail address' },
-                        { type : 'email', prompt : 'Enter a valid e-mail' }
+                        { type : 'empty', prompt : 'Enter your username' }
                     ]
                 },
                 password: {
