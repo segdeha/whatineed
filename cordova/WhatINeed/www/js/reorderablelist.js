@@ -60,12 +60,9 @@ var ReorderableList = (function (window, document, $, undefined) {
      * Render a list
      */
     proto.render = function () {
-        // render items
-        var html = '';
-
         function buildItem(item) {
             html += `
-                <div class="item" data-id="${item.id}" data-src="${item.src}">
+                <div class="item" data-thing-id="${item.id}" data-purchase-id="${item.id}" data-src="${item.src}">
                     <div class="content">
                         <div class="ui checkbox left-floated-checkbox">
                             <input type="checkbox" name="example">
@@ -80,9 +77,6 @@ var ReorderableList = (function (window, document, $, undefined) {
             this.ids.push(item.id);
         }
 
-        this.data.forEach(buildItem.bind(this));
-        $(this.selectors.list).html(html);
-
         function postInsertion() {
             // grab all of the list items from the dom, cast as an array
             this.items = Array.prototype.slice.call(document.querySelectorAll(this.selectors.items));
@@ -93,6 +87,11 @@ var ReorderableList = (function (window, document, $, undefined) {
             // activate the checkboxes
             this.initCheckboxes();
         }
+
+        // render items
+        var html = '';
+        this.data.forEach(buildItem.bind(this));
+        $(this.selectors.list).html(html);
 
         // get the items after they’ve been inserted into the dom
         window.requestAnimationFrame(postInsertion.bind(this));
@@ -124,10 +123,11 @@ var ReorderableList = (function (window, document, $, undefined) {
      * Activate checkboxes
      */
     proto.initCheckboxes = function () {
-        var self = this;
+        var self = this; // store instance because we need to use `this` later
         $('.active .checkbox').checkbox({
             onChecked: function() {
-                var id = self.getIdFromInput(this);
+                var thing_id    = self.getThingIdFromInput(this);
+                var purchase_id = self.getPurchaseIdFromInput(this);
 
                 // move the item to the end of the array
                 var idx = self.ids.indexOf(id);
@@ -148,7 +148,9 @@ var ReorderableList = (function (window, document, $, undefined) {
                 //     url: `${BASEURL}/api/purchase/`,
                 //     data: {
                 //         user_id: USERID,
-                //         thing_id: id
+                //         thing_id: thing_id,
+                //         purchase_id: purchase_id,
+                //         action: 'purchase'
                 //     }
                 // });
                 // posting.done(function (json) {
@@ -157,7 +159,8 @@ var ReorderableList = (function (window, document, $, undefined) {
                 // });
             },
             onUnchecked: function() {
-                var id = self.getIdFromInput(this);
+                var thing_id    = self.getThingIdFromInput(this);
+                var purchase_id = self.getPurchaseIdFromInput(this);
 
                 // move the item to the beginning of the array
                 // TODO: move the item to the previous position?
@@ -179,7 +182,9 @@ var ReorderableList = (function (window, document, $, undefined) {
                 //     url: `${BASEURL}/api/purchase/`,
                 //     data: {
                 //         user_id: USERID,
-                //         thing_id: id
+                //         thing_id: thing_id,
+                //         purchase_id: purchase_id,
+                //         action: 'unpurchase' // ???
                 //     }
                 // });
                 // posting.done(function (json) {
@@ -191,10 +196,17 @@ var ReorderableList = (function (window, document, $, undefined) {
     };
 
     /**
-     * Get the DB ID for an item from the <input>
+     * Get the DB ID for a thing from the <input>
      */
-    proto.getIdFromInput = function (input) {
-        return $(input).parents('.item').attr('data-id');
+    proto.getThingIdFromInput = function (input) {
+        return $(input).parents('.item').attr('data-thing-id');
+    };
+
+    /**
+     * Get the DB ID for a purchase from the <input>
+     */
+    proto.getPurchaseIdFromInput = function (input) {
+        return $(input).parents('.item').attr('data-purchase-id');
     };
 
     return ReorderableList;

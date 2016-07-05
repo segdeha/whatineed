@@ -54,7 +54,9 @@ console.log(data);
                         url: `${BASEURL}/api/thing/add/`,
                         data: {
                             user_id: USERID,
-                            thing_id: data.id
+                            thing_id: data.id,
+                            purchase_id: null,
+                            action: 'create'
                         }
                     });
                     posting.done(function (json) {
