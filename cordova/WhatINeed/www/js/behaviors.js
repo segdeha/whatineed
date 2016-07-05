@@ -29,9 +29,23 @@
             evt.preventDefault();
             if (null === document.querySelector('.field.error')) {
                 // TODO make ajax call to authenticate, then do the below
-                $('#login').fadeOut(250, function () {
-                    $('#lists').addClass('show');
-                    window.requestAnimationFrame(initList);
+                var username = $('#login [name=username]').val();
+                var password = $('#login [name=password]').val();
+
+console.log(username, password);
+
+                var posting = $.post(`${BASEURL}/api/login`, {
+                    username: username,
+                    password: password
+                });
+                posting.done(function (data) {
+
+console.log(data);
+
+                    $('#login').fadeOut(250, function () {
+                        $('#lists').addClass('show');
+                        window.requestAnimationFrame(initList);
+                    });
                 });
             }
         });
