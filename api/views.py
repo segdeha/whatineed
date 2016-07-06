@@ -30,7 +30,23 @@ def things_list(request, user_id):
     data = Purchase.objects.filter(owner_id = user_id).order_by('purchase_date').iterator() #sort by predicted_replace_days
     object_list = []
     for i in data:
-        object_list.append(i.thing_id.name)
+        purchase_id = i.id
+        purchase_thing_id = i.thing_id.id
+        name = i.thing_id.name
+        status = i.state
+        last_purchased = i.purchase_date # requires further processing
+        src = i.thing_id.product_image # image
+
+        new_object = {
+            "id": purchase_thing_id,
+            "name": name,
+            "status": status,
+            "last_purchased": last_purchased,
+            "src": src,
+            "purchase_id": purchase_id,
+        }
+
+        object_list.append(new_object)
 
     json_object = {'data':object_list}
     return JsonResponse(json_object)
