@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 import datetime
 import pytz
+from operator import itemgetter
 # Create your views here.
 
 # Given a barcode number return object with information about that product
@@ -102,8 +103,10 @@ def things_list(request, user_id):
         }
 
         object_list.append(new_object)
+        ordered_ordered_object_list = sorted(object_list, key=itemgetter('last_purchased'))
 
-    json_object = {'data':object_list}
+
+    json_object = {'data':ordered_ordered_object_list}
     return JsonResponse(json_object)
 
 # Login authentication
