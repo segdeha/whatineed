@@ -157,10 +157,6 @@ var ReorderableList = (function (window, document, $, undefined) {
                 var thing_id    = self.getThingIdFromInput(this);
                 var purchase_id = self.getPurchaseIdFromInput(this);
 
-                // move the item to the end of the array
-                var idx = self.ids.indexOf(thing_id);
-                self.ids.move(idx, self.ids.length - 1);
-
                 // change status to 'later'
                 $(this)
                     .parents('.checkbox')
@@ -171,10 +167,14 @@ var ReorderableList = (function (window, document, $, undefined) {
                     .addClass('checked')
                 ;
 
+                // move the item to the end of the array
+                var idx = self.ids.indexOf(thing_id);
+                self.ids.move(idx, self.ids.length - 1);
+
                 // reorder items in the ui
                 self.reorder();
 
-                // TODO save new state to server
+                // save new state to server
                 var posting = $.post({
                     url: `${BASEURL}/api/purchase/`,
                     data: { purchase_id: purchase_id }
@@ -187,11 +187,6 @@ var ReorderableList = (function (window, document, $, undefined) {
                 var thing_id    = self.getThingIdFromInput(this);
                 var purchase_id = self.getPurchaseIdFromInput(this);
 
-                // move the item to the beginning of the array
-                // TODO: move the item to the previous position?
-                var idx = self.ids.indexOf(thing_id);
-                self.ids.move(idx, 0);
-
                 // change status to 'immediately'
                 $(this)
                     .parents('.checkbox')
@@ -202,12 +197,17 @@ var ReorderableList = (function (window, document, $, undefined) {
                     .removeClass('checked')
                 ;
 
+                // move the item to the beginning of the array
+                // TODO: move the item to the previous position?
+                var idx = self.ids.indexOf(thing_id);
+                self.ids.move(idx, 0);
+
                 // reorder items in the ui
                 self.reorder();
 
                 // TODO save new state to server
                 // var posting = $.post({
-                //     url: `${BASEURL}/api/purchase/`,
+                //     url: `${BASEURL}/api/unpurchase/`,
                 //     data: {
                 //         user_id: USERID,
                 //         thing_id: thing_id,

@@ -14,6 +14,16 @@ var BarcodeReader = (function (window, document, $, undefined) {
     var proto = BarcodeReader.prototype;
 
     /**
+     * Take picture using device camera and retrieve image as base64-encoded string
+     */
+    proto.capturePhoto = function () {
+        navigator.camera.getPicture(this.onPhotoDataSuccess, this.onCaptureFail, {
+            quality: 50,
+            destinationType: navigator.camera.DestinationType.DATA_URL
+        });
+    };
+
+    /**
      * Called when a photo is successfully retrieved
      * @param String imageData base64-encoded image data
      */
@@ -127,16 +137,6 @@ var BarcodeReader = (function (window, document, $, undefined) {
             Quagga.stop();
             noBarcode();
         }, 10000);
-    };
-
-    /**
-     * Take picture using device camera and retrieve image as base64-encoded string
-     */
-    proto.capturePhoto = function () {
-        navigator.camera.getPicture(this.onPhotoDataSuccess, this.onCaptureFail, {
-            quality: 50,
-            destinationType: navigator.camera.DestinationType.DATA_URL
-        });
     };
 
     /**
