@@ -39,6 +39,7 @@ follow its instructions and make sure you see the right message in your browser.
 ## Requirements (for now)
 
     pip install numpy
+    pip install pytz
 
 ## Installing Cordova
 

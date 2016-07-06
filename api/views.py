@@ -5,7 +5,8 @@ from django.contrib.auth import authenticate, login
 from web.models import Thing, Purchase
 from django.contrib.auth.models import User
 from django.utils import timezone
-
+import datetime
+import pytz
 # Create your views here.
 
 # Given a barcode number return object with information about that product
@@ -44,21 +45,56 @@ def purchase(request):
     return JsonResponse(json_object)
 
 def things_list(request, user_id):
-    data = Purchase.objects.filter(owner_id = user_id).order_by('purchase_date').iterator() #sort by predicted_replace_days
+    data = Purchase.objects.filter(owner_id = user_id, purchase_date = None).iterator() #sort by predicted_replace_days
     object_list = []
     for i in data:
+        # get a list of all items of the same type
+        item_iterator = Purchase.objects.filter(owner_id = user_id, thing_id = i.thing_id).order_by('purchase_date')
+        # find the item that has the most recent purchase DateTimeField
+        most_recent_purchase_date = item_iterator[len(item_iterator) - 1].purchase_date
+        now = datetime.datetime.now().replace(tzinfo= pytz.utc)
+        delta = (now - most_recent_purchase_date).days
+        # get time delta between now and the most recent purchase DateTimeField
+
+
+        # print(delta)
+        if delta == 0:
+            last_purchased = 'Today'
+        elif delta == None:
+            last_purchased = 'Never'
+        elif delta < 0:
+            last_purchased = 'Well done time traveler'
+        elif delta > 0:
+            year = delta // 365
+            week = delta - (year * 365) // 7
+            days = delta - ((year * 365) + (week * 7))
+            if year == 0 and week == 0 and days == 1:
+                last_purchased = 'Yesterday'
+            elif year == 0 and week == 0:
+                last_purchased = '{number} days'.format(number = days)
+            elif year == 0 and week == 1:
+                last_purchased = '{week} week {number} days'.format(number = days, week = week)
+            elif year == 0 and week > 1:
+                last_purchased = '{week} weeks {number} days'.format(number = days, week = week)
+            elif year == 1:
+                last_purchased = '{year} year {week} weeks {number} days'.format(number = days, week = week, year = year)
+            else:
+                last_purchased = '{year} years {week} weeks {number} days'.format(number = days, week = week, year = year)
+
+
+        # make human readable
+
         purchase_id = i.id
         purchase_thing_id = i.thing_id.id
         name = i.thing_id.name
-        status = i.state
-        last_purchased = i.purchase_date # requires further processing
+        status = i.read_state()
         src = i.thing_id.product_image # image
 
         new_object = {
             "thing_id": purchase_thing_id,
             "name": name,
             "status": status,
-            "last_purchased": last_purchased,
+            "last_purchased": last_purchased, # date delta to juman readable or null to never
             "src": src,
             "purchase_id": purchase_id,
         }

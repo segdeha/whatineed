@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 import statistics as stats
 import numpy as np
 
+
 # Create your models here.
 
 
@@ -33,7 +34,6 @@ class Purchase(models.Model):
     state = models.IntegerField(default=0, choices=STATES)
     thing_id = models.ForeignKey(Thing)
     owner_id = models.ForeignKey(User)
-    purchased = models.BooleanField(default=False)
     estimated_number_of_days = models.PositiveSmallIntegerField(default=7, blank=False)
     created_date = models.DateTimeField(auto_now_add=True)
     purchase_date = models.DateTimeField(auto_now=False, blank=True, null=True)
@@ -41,6 +41,17 @@ class Purchase(models.Model):
 
     def __str__(self):
         return self.thing_id.name
+
+    def read_state(self):
+        return self.STATES[self.state][1]
+
+    # def last_purchased_readable(self):
+    #     if self.purchase_date == None:
+    #         return 'Never'
+    #     else:
+    #         return self.purchase_date #timedelta(self.purchase_date)
+
+
 
     # def duration(self):
     #     duration = self.consumed_time - self.purchase_time
