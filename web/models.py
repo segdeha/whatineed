@@ -34,12 +34,11 @@ class Purchase(models.Model):
     estimated_number_of_days = models.PositiveSmallIntegerField(default=7, blank=False)
     created_date = models.DateTimeField(auto_now_add=True)
     purchase_date = models.DateTimeField(auto_now=False, blank=True, null=True)
-    consumed_date = models.DateTimeField(auto_now=False, blank=True, null=True)
     predicted_replace_days = models.PositiveSmallIntegerField(blank=True)
 
-    def duration(self):
-        duration = self.consumed_time - self.purchase_time
-        return duration
+    # def duration(self):
+    #     duration = self.consumed_time - self.purchase_time
+    #     return duration
 
     def relevant_mean(user_predict, *args): # returns mean of data it deems relevant
         if isinstance(args[0], list):
