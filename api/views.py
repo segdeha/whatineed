@@ -65,21 +65,24 @@ def things_list(request, user_id):
         elif delta < 0:
             last_purchased = 'well done time traveler'
         elif delta > 0:
-            year = delta // 365
-            week = ((year * 365) // 7) - delta
-            days = ((year * 365) + (week * 7)) - delta
-            if year == 0 and week == 0 and days == 1:
-                last_purchased = 'yesterday'
-            elif year == 0 and week == 0:
-                last_purchased = '{number} days'.format(number = days)
-            elif year == 0 and week == 1:
-                last_purchased = '{week} week {number} days'.format(number = days, week = week)
-            elif year == 0 and week > 1:
-                last_purchased = '{week} weeks {number} days'.format(number = days, week = week)
-            elif year == 1:
-                last_purchased = '{year} year {week} weeks {number} days'.format(number = days, week = week, year = year)
-            else:
-                last_purchased = '{year} years {week} weeks {number} days'.format(number = days, week = week, year = year)
+            days = delta
+            last_purchased = '{days} days'.format(days = days)
+
+            # year = delta // 365
+            # week = (delta // 7) - 52)
+            # days = ((year * 365) + (week * 7)) - delta
+            # if year == 0 and week == 0 and days == 1:
+            #     last_purchased = 'yesterday'
+            # elif year == 0 and week == 0:
+            #     last_purchased = '{number} days'.format(number = days)
+            # elif year == 0 and week == 1:
+            #     last_purchased = '{week} week {number} days'.format(number = days, week = week)
+            # elif year == 0 and week > 1:
+            #     last_purchased = '{week} weeks {number} days'.format(number = days, week = week)
+            # elif year == 1:
+            #     last_purchased = '{year} year {week} weeks {number} days'.format(number = days, week = week, year = year)
+            # else:
+            #     last_purchased = '{year} years {week} weeks {number} days'.format(number = days, week = week, year = year)
 
 
         # make human readable
