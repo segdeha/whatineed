@@ -65,7 +65,7 @@ h1 {
         position: absolute;
         right: 0;
         top: 0;
-        transition: transform 0.33s;
+        transition: transform 0.45s;
     }
         .list .item.checked:after {
             background: #666;

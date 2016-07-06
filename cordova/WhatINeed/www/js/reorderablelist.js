@@ -53,7 +53,10 @@ var ReorderableList = (function (window, document, $, undefined) {
         getting.done(function (data) {
             var list = new ReorderableList(selectors, data);
             list.render();
-            $('#refresh').removeClass('loading');
+            // delay a quarter second so it’s not so jarring
+            setTimeout(function () {
+                $('#refresh').removeClass('loading');
+            }, 250);
         });
     };
 
