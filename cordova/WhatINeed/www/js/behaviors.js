@@ -81,12 +81,22 @@
         });
 
         $('.active .list').on('click', function (evt) {
-            var src;
+            var item, name, last_purchased, src;
             if (evt.target.matches('.header') || evt.target.matches('.description')) {
+                item = $(evt.target).parents('.item');
+
+                // get name of item from .header
+                name = $('.header', item).html();
+                $('#product-info .header').html(name);
+
+                // get last purchased from .description
+                last_purchased = $('.description', item).html();
+                $('#product-info .last-purchased').html(last_purchased);
+
                 // get image source from div.item[data-src]
-                src = $(evt.target).parents('.item').attr('data-src') || 'img/default-image.png';
-                // set image source
+                src = item.attr('data-src') || 'img/default-image.png';
                 $('#product-info .image').attr('src', src);
+
                 // show modal
                 $('#product-info').modal('show');
             }

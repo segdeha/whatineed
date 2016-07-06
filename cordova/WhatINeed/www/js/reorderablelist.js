@@ -47,7 +47,7 @@ var ReorderableList = (function (window, document, $, undefined) {
             list: '.active .list',
             items: '.active .list .item'
         };
-        // TODO fetch data from server
+        // fetch data from server
         // var getting = $.getJSON(`${BASEURL}/api/things/${USERID}/`);
         var getting = $.getJSON(`${BASEURL}/static/_data.json`);
         getting.done(function (data) {

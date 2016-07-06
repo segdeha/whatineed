@@ -82,13 +82,19 @@ h1 {
             top: 15px;
             visibility: visible;
         }
+        .list .item .header {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: 20px;
+            overflow: hidden;
+        }
 
 .status {
     border-radius: 9px;
     display: inline-block;
     float: right;
     height: 18px;
-    margin-top: 6px;
+    margin: 6px 0 0 4px;
     width: 18px;
 }
     .status.immediately {
