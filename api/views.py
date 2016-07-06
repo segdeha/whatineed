@@ -53,39 +53,39 @@ def things_list(request, user_id):
         # find the item that has the most recent purchase DateTimeField
         most_recent_purchase_date = item_iterator[len(item_iterator) - 1].purchase_date
         now = datetime.datetime.now().replace(tzinfo= pytz.utc)
-        delta = (now - most_recent_purchase_date).days
+        if most_recent_purchase_date == None:
+            last_purchase = 'never'
+        else:
+            delta = (now - most_recent_purchase_date).days
         # get time delta between now and the most recent purchase DateTimeField
 
 
-        # print(delta)
-        if delta == 0:
-            last_purchased = 'today'
-        elif delta == None:
-            last_purchased = 'never'
-        elif delta < 0:
-            last_purchased = 'well done time traveler'
-        elif delta > 0:
-            days = delta
-            last_purchased = '{days} days'.format(days = days)
-
-            # year = delta // 365
-            # week = (delta // 7) - 52)
-            # days = ((year * 365) + (week * 7)) - delta
-            # if year == 0 and week == 0 and days == 1:
-            #     last_purchased = 'yesterday'
-            # elif year == 0 and week == 0:
-            #     last_purchased = '{number} days'.format(number = days)
-            # elif year == 0 and week == 1:
-            #     last_purchased = '{week} week {number} days'.format(number = days, week = week)
-            # elif year == 0 and week > 1:
-            #     last_purchased = '{week} weeks {number} days'.format(number = days, week = week)
-            # elif year == 1:
-            #     last_purchased = '{year} year {week} weeks {number} days'.format(number = days, week = week, year = year)
-            # else:
-            #     last_purchased = '{year} years {week} weeks {number} days'.format(number = days, week = week, year = year)
+            # print(delta)
+            if delta == 0:
+                last_purchased = 'today'
+            elif delta < 0:
+                last_purchased = 'well done time traveler'
+            elif delta > 0:
+                years = delta // 365
+                weeks = delta % 365 // 7
+                days = delta % 365 % 7
 
 
-        # make human readable
+                if year == 0 and week == 0 and days == 1:
+                    last_purchased = 'yesterday'
+                elif year == 0 and week == 0:
+                    last_purchased = '{number} days'.format(number = days)
+                elif year == 0 and week == 1:
+                    last_purchased = '{week} week {number} days'.format(number = days, week = week)
+                elif year == 0 and week > 1:
+                    last_purchased = '{week} weeks {number} days'.format(number = days, week = week)
+                elif year == 1:
+                    last_purchased = '{year} year {week} weeks {number} days'.format(number = days, week = week, year = year)
+                else:
+                    last_purchased = '{year} years {week} weeks {number} days'.format(number = days, week = week, year = year)
+
+
+            # make human readable
 
         purchase_id = i.id
         purchase_thing_id = i.thing_id.id
