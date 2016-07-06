@@ -51,7 +51,7 @@
 
                         $('#login').fadeOut(250, function () {
                             $('#lists').addClass('show');
-                            window.requestAnimationFrame(initList);
+                            window.requestAnimationFrame(initLists);
                         });
                     }
                     else {
@@ -65,13 +65,20 @@
         });
     }
 
-    function initList() {
+    function initLists() {
         var barcodeReader = new BarcodeReader();
         $('#new-product-button').on('click', barcodeReader.capturePhoto.bind(barcodeReader));
 
+        // fetch the list for the first time
         ReorderableList.prototype.fetch();
 
-        // $('.menu .item').tab();
+        // $('.menu .item').tab()
+
+        // fetch new set of results when user hits refresh
+        $('#refresh').click(function (evt) {
+            $(this).addClass('loading');
+            ReorderableList.prototype.fetch();
+        });
 
         $('.active .list').on('click', function (evt) {
             var src;

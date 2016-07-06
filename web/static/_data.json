@@ -119,41 +119,6 @@
     "src": "http:\/\/gaia.adage.com\/images\/bin\/image\/x-large\/Clorox_bleach.jpg"
   },
   {
-    "id": "24",
-    "name": "Lipton\u2019s Tea",
-    "status": "later",
-    "last_purchased": "5 days",
-    "src": "http:\/\/www.caffeineinformer.com\/wp-content\/caffeine\/lipton-tea.jpg"
-  },
-  {
-    "id": "25",
-    "name": "Trader Joe\u2019s Peanut Butter",
-    "status": "later",
-    "last_purchased": "4 weeks",
-    "src": "http:\/\/nourishedbynutrition.com\/wp-content\/uploads\/2014\/09\/Trader-Joes-Crunchy-Peanut-Butter-1-of-12.jpg"
-  },
-  {
-    "id": "26",
-    "name": "Clorox Bleach",
-    "status": "later",
-    "last_purchased": "12 days",
-    "src": "http:\/\/gaia.adage.com\/images\/bin\/image\/x-large\/Clorox_bleach.jpg"
-  },
-  {
-    "id": "27",
-    "name": "Lipton\u2019s Tea",
-    "status": "later",
-    "last_purchased": "5 days",
-    "src": "http:\/\/www.caffeineinformer.com\/wp-content\/caffeine\/lipton-tea.jpg"
-  },
-  {
-    "id": "28",
-    "name": "Trader Joe\u2019s Peanut Butter",
-    "status": "later",
-    "last_purchased": "4 weeks",
-    "src": "http:\/\/nourishedbynutrition.com\/wp-content\/uploads\/2014\/09\/Trader-Joes-Crunchy-Peanut-Butter-1-of-12.jpg"
-  },
-  {
     "id": "29",
     "name": "Clorox Bleach",
     "status": "inactive",

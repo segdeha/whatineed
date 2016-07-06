@@ -48,11 +48,12 @@ var ReorderableList = (function (window, document, $, undefined) {
             items: '.active .list .item'
         };
         // TODO fetch data from server
-        var getting = $.getJSON(`${BASEURL}/api/things/${USERID}/`);
-        // var getting = $.getJSON(`${BASEURL}/static/_data.json`);
+        // var getting = $.getJSON(`${BASEURL}/api/things/${USERID}/`);
+        var getting = $.getJSON(`${BASEURL}/static/_data.json`);
         getting.done(function (data) {
             var list = new ReorderableList(selectors, data);
             list.render();
+            $('#refresh').removeClass('loading');
         });
     };
 
@@ -130,15 +131,18 @@ var ReorderableList = (function (window, document, $, undefined) {
                 var purchase_id = self.getPurchaseIdFromInput(this);
 
                 // move the item to the end of the array
-                var idx = self.ids.indexOf(id);
+                var idx = self.ids.indexOf(thing_id);
                 self.ids.move(idx, self.ids.length - 1);
 
-                // change class name to 'later'
+                // change status to 'later'
                 $(this)
                     .parents('.checkbox')
                     .siblings('.status')
                     .removeClass()
-                    .addClass('status later');
+                    .addClass('status later')
+                    .parents('.item')
+                    .addClass('checked')
+                ;
 
                 // reorder items in the ui
                 self.reorder();
@@ -153,6 +157,7 @@ var ReorderableList = (function (window, document, $, undefined) {
                 //         action: 'purchase'
                 //     }
                 // });
+                // thinking we don’t get a new list on every save, disruptive
                 // posting.done(function (json) {
                 //     // thing saved successfully, get refreshed list
                 //     ReorderableList.prototype.fetch();
@@ -167,15 +172,18 @@ var ReorderableList = (function (window, document, $, undefined) {
 
                 // move the item to the beginning of the array
                 // TODO: move the item to the previous position?
-                var idx = self.ids.indexOf(id);
+                var idx = self.ids.indexOf(thing_id);
                 self.ids.move(idx, 0);
 
-                // change class name to 'immediately'
+                // change status to 'immediately'
                 $(this)
                     .parents('.checkbox')
                     .siblings('.status')
                     .removeClass()
-                    .addClass('status immediately');
+                    .addClass('status immediately')
+                    .parents('.item')
+                    .removeClass('checked')
+                ;
 
                 // reorder items in the ui
                 self.reorder();
@@ -190,6 +198,7 @@ var ReorderableList = (function (window, document, $, undefined) {
                 //         action: 'unpurchase' // ???
                 //     }
                 // });
+                // thinking we don’t get a new list on every save, disruptive
                 // posting.done(function (json) {
                 //     // thing saved successfully, get refreshed list
                 //     ReorderableList.prototype.fetch();

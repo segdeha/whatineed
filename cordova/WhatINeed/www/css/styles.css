@@ -35,6 +35,27 @@ h1 {
     width: 32px;
 }
 
+/* refresh button */
+#refresh {
+    position: absolute;
+    right: 12px;
+    top: 14px;
+    width: 32px;
+}
+    #refresh i {
+        background: transparent url(../img/refresh-icon.png) center center no-repeat;
+        background-size: 24px 24px;
+        display: inline-block;
+        height: 16px;
+        position: relative;
+        right: 7px;
+        top: 2px;
+        width: 16px;
+    }
+        #refresh.loading i {
+            visibility: hidden;
+        }
+
 .list {
     position: relative;
 }
@@ -46,6 +67,16 @@ h1 {
         top: 0;
         transition: transform 0.33s;
     }
+        .list .item.checked:after {
+            background: #666;
+            content: '';
+            height: 1px;
+            left: 22px;
+            position: absolute;
+            right: 24px;
+            top: 15px;
+            visibility: visible;
+        }
 
 .status {
     border-radius: 9px;
