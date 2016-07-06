@@ -175,23 +175,13 @@ var ReorderableList = (function (window, document, $, undefined) {
                 self.reorder();
 
                 // TODO save new state to server
-                // var posting = $.post({
-                //     url: `${BASEURL}/api/purchase/`,
-                //     data: {
-                //         user_id: USERID,
-                //         thing_id: thing_id,
-                //         purchase_id: purchase_id,
-                //         action: 'purchase'
-                //     }
-                // });
-                // thinking we don’t get a new list on every save, disruptive
-                // posting.done(function (json) {
-                //     // thing saved successfully, get refreshed list
-                //     ReorderableList.prototype.fetch();
-                // });
-                // posting.fail(function (json) {
-                //     alert('Saving purchase failed. Try again.');
-                // });
+                var posting = $.post({
+                    url: `${BASEURL}/api/purchase/`,
+                    data: { purchase_id: purchase_id }
+                });
+                posting.fail(function (json) {
+                    alert('Saving purchase failed. Try again.');
+                });
             },
             onUnchecked: function() {
                 var thing_id    = self.getThingIdFromInput(this);
@@ -224,11 +214,6 @@ var ReorderableList = (function (window, document, $, undefined) {
                 //         purchase_id: purchase_id,
                 //         action: 'unpurchase' // ???
                 //     }
-                // });
-                // thinking we don’t get a new list on every save, disruptive
-                // posting.done(function (json) {
-                //     // thing saved successfully, get refreshed list
-                //     ReorderableList.prototype.fetch();
                 // });
                 // posting.fail(function (json) {
                 //     alert('Saving purchase failed. Try again.');

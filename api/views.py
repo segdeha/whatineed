@@ -4,7 +4,7 @@ from django.db.models import lookups
 from django.contrib.auth import authenticate, login
 from web.models import Thing, Purchase
 from django.contrib.auth.models import User
-import datetime # not sure if this is needed
+from django.utils import timezone
 
 # Create your views here.
 
@@ -24,7 +24,23 @@ def barcode(request, barcode_number):
     return JsonResponse(json_object)
 
 def purchase(request):
-    pass
+    """Handle POST request of a new purchase:
+
+    1. Update most recent purchase with a purchase datetime
+    2. Create a new purchase record with a null purchase date
+
+    """
+    try:
+        purchase_id = request.POST['purchase_id']
+        p = Purchase.objects.get(id=purchase_id)
+        p.purchase_date = timezone.now()
+        p.save()
+        new_purchase = Purchase(state=2, thing_id=p.thing_id, owner_id=p.owner_id, predicted_replace_days=7)
+        new_purchase.save()
+        json_object = {'status':'200 OK'}
+    except:
+        json_object = {'errors':{'title' : 'No Post Data', 'detail' : 'there was no post data in your request'}}
+    return JsonResponse(json_object)
 
 def things_list(request, user_id):
     data = Purchase.objects.filter(owner_id = user_id).order_by('purchase_date').iterator() #sort by predicted_replace_days
@@ -59,7 +75,6 @@ def login(request):
         user = authenticate(username=username, password=password).__dict__
         user_id = user['id']
         json_object = {'data':{'user_id':user_id}}
-        return JsonResponse(json_object)
     except:
         json_object = {'errors':{'title' : 'No Post Data', 'detail' : 'there was no post data in your request'}}
-        return JsonResponse(json_object)
+    return JsonResponse(json_object)
