@@ -3,9 +3,12 @@
 }
 
 #login {
-    display: block;
+    align-items: center;
+    height: 100%;
+    margin-left: 0;
     opacity: 1;
     padding-top: 10px;
+    width: 100% !important;
 }
     #login.fade {
         opacity: 0;
