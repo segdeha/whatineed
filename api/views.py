@@ -38,7 +38,7 @@ def things_list(request, user_id):
         src = i.thing_id.product_image # image
 
         new_object = {
-            "id": purchase_thing_id,
+            "thing_id": purchase_thing_id,
             "name": name,
             "status": status,
             "last_purchased": last_purchased,
