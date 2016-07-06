@@ -4,7 +4,11 @@ from django.db.models import lookups
 from django.contrib.auth import authenticate, login
 from web.models import Thing, Purchase
 from django.contrib.auth.models import User
+<<<<<<< Updated upstream
 from django.utils import timezone
+=======
+
+>>>>>>> Stashed changes
 import datetime
 import pytz
 # Create your views here.
