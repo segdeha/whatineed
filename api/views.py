@@ -35,6 +35,7 @@ def purchase(request):
         p = Purchase.objects.get(id=purchase_id)
         p.purchase_date = timezone.now()
         p.save()
+        # TODO calculate predicted_replace_days based on new state of purchases
         new_purchase = Purchase(state=2, thing_id=p.thing_id, owner_id=p.owner_id, predicted_replace_days=7)
         new_purchase.save()
         json_object = {'status':'200 OK'}
