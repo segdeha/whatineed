@@ -54,6 +54,7 @@ def things_list(request, user_id):
         # find the item that has the most recent purchase DateTimeField
         most_recent_purchase_date = item_iterator[len(item_iterator) - 1].purchase_date
         now = datetime.datetime.now().replace(tzinfo= pytz.utc)
+
         if most_recent_purchase_date == None:
             last_purchased = 'never'
         else:
@@ -86,6 +87,7 @@ def things_list(request, user_id):
 
 
             # make human readable
+
 
         purchase_id = i.id
         purchase_thing_id = i.thing_id.id
