@@ -72,8 +72,6 @@
         // fetch the list for the first time
         ReorderableList.prototype.fetch();
 
-        // $('.menu .item').tab()
-
         // fetch new set of results when user hits refresh
         $('#refresh').click(function (evt) {
             $(this).addClass('loading');

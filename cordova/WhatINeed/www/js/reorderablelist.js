@@ -66,7 +66,7 @@ var ReorderableList = (function (window, document, $, undefined) {
     proto.render = function () {
         function buildItem(item) {
             html += `
-                <div class="item" data-thing-id="${item.id}" data-purchase-id="${item.id}" data-src="${item.src}">
+                <div class="item" data-thing-id="${item.thing_id}" data-purchase-id="${item.purchase_id}" data-src="${item.src}">
                     <div class="content">
                         <div class="ui checkbox left-floated-checkbox">
                             <input type="checkbox" name="example">
@@ -76,9 +76,9 @@ var ReorderableList = (function (window, document, $, undefined) {
                         <span class="header">${item.name}</span>
                         <div class="description">Last purchased ${item.last_purchased} ago</div>
                     </div>
-                </div>`
-            ;
-            this.ids.push(item.id);
+                </div>
+            `;
+            this.ids.push(item.thing_id);
         }
 
         function postInsertion() {
@@ -105,8 +105,8 @@ var ReorderableList = (function (window, document, $, undefined) {
      * Reorder a previously rendered list
      */
     proto.reorder = function () {
-        function setTransform(id, idx) {
-            var item = document.querySelector(`[data-thing-id="${id}"]`);
+        function setTransform(thing_id, idx) {
+            var item = document.querySelector(`[data-thing-id="${thing_id}"]`);
             var rule = `translate3d(0, ${idx * this.itemHeight}px, 0)`;
             if (idx > 0) {
                 item.style.borderTop = '1px solid rgba(34, 36, 38, 0.15)';
