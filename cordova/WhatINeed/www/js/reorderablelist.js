@@ -53,6 +53,11 @@ var ReorderableList = (function (window, document, $, undefined) {
         getting.done(function (json) {
             var list = new ReorderableList(selectors, json.data);
             list.render();
+        });
+        getting.fail(function (json) {
+            alert('Refreshing the list failed. Try again.');
+        });
+        getting.always(function () {
             // delay a quarter second so it’s not so jarring
             setTimeout(function () {
                 $('#refresh').removeClass('loading');
@@ -65,26 +70,7 @@ var ReorderableList = (function (window, document, $, undefined) {
      */
     proto.render = function () {
         function buildItem(item) {
-
-            item.thing_id = item.id; // TODO remove this once api returns the right field name
-            item.status = (function () { // TODO remove this once api returns the right value
-                var status = 'immediately';
-                switch (item.status) {
-                    case 1:
-                        status = 'soon';
-                    break;
-                    case 2:
-                        status = 'later';
-                    break;
-                    case 3:
-                        status = 'inactive';
-                    break;
-                }
-                return status;
-            }());
-            if (!item.last_purchased) { // TODO remove this once api returns the right value
-                item.last_purchased = '0 days';
-            }
+            item.status = item.status.toLowerCase();
 
             html += `
                 <div class="item" data-thing-id="${item.thing_id}" data-purchase-id="${item.purchase_id}" data-src="${item.src}">
