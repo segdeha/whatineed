@@ -6,8 +6,6 @@
  */
 var BarcodeReader = (function (window, document, $, undefined) {
 
-    // 'use strict'; // FIXME something here doesn’t agree with strict mode
-
     /**
      * @constructor
      */
@@ -33,8 +31,6 @@ var BarcodeReader = (function (window, document, $, undefined) {
             function displayProductModal(data) {
                 var number_of_days = document.querySelector('[name="number-of-days"]');
 
-console.log(data);
-
                 // display barcode value
                 $('#barcode-result').html(result.codeResult.code);
 
@@ -59,16 +55,11 @@ console.log(data);
                         estimated_number_of_days: number_of_days.value
                     };
 
-console.log(data);
-
                     var posting = $.post({
                         url: `${BASEURL}/api/purchase/`,
                         data: postData
                     });
                     posting.done(function (json) {
-
-console.log('done', json);
-
                         // close modal
                         $('#new-product').modal('hide');
                         // reset estimated number of days back to default-image
@@ -77,9 +68,6 @@ console.log('done', json);
                         ReorderableList.prototype.fetch();
                     });
                     posting.fail(function (json) {
-
-console.log('fail', json);
-
                         // close modal
                         $('#new-product').modal('hide');
                         window.requestAnimationFrame(function () {

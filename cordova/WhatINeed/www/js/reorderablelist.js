@@ -5,8 +5,6 @@
  */
 var ReorderableList = (function (window, document, $, undefined) {
 
-    // 'use strict'; // FIXME something here doesn’t agree with strict mode
-
     // from: http://stackoverflow.com/a/7180095/11577
     // TODO: find a way to do this without altering Array.prototype
     if ('function' !== typeof Array.prototype.move) {
@@ -20,9 +18,11 @@ var ReorderableList = (function (window, document, $, undefined) {
      */
     function ReorderableList(selectors, data) {
         this.selectors = selectors;
-        this.data = data;
-        // create an array to hold the item ids (populated by render)
+        this.data = data || [];
+        // item ids (populated by render)
         this.ids = [];
+        // item elements (populated by render)
+        this.items = [];
         // the height as a number of one list item (in px)
         this.itemHeight = null;
         // start preloading images
@@ -48,10 +48,10 @@ var ReorderableList = (function (window, document, $, undefined) {
             items: '.active .list .item'
         };
         // fetch data from server
-        // var getting = $.getJSON(`${BASEURL}/api/things/${USERID}/`);
-        var getting = $.getJSON(`${BASEURL}/static/_data.json`);
-        getting.done(function (data) {
-            var list = new ReorderableList(selectors, data);
+        var getting = $.getJSON(`${BASEURL}/api/things/${USERID}/`);
+        // var getting = $.getJSON(`${BASEURL}/static/_data.json`);
+        getting.done(function (json) {
+            var list = new ReorderableList(selectors, json.data);
             list.render();
             // delay a quarter second so it’s not so jarring
             setTimeout(function () {
@@ -65,6 +65,27 @@ var ReorderableList = (function (window, document, $, undefined) {
      */
     proto.render = function () {
         function buildItem(item) {
+
+            item.thing_id = item.id; // TODO remove this once api returns the right field name
+            item.status = (function () { // TODO remove this once api returns the right value
+                var status = 'immediately';
+                switch (item.status) {
+                    case 1:
+                        status = 'soon';
+                    break;
+                    case 2:
+                        status = 'later';
+                    break;
+                    case 3:
+                        status = 'inactive';
+                    break;
+                }
+                return status;
+            }());
+            if (!item.last_purchased) { // TODO remove this once api returns the right value
+                item.last_purchased = '0 days';
+            }
+
             html += `
                 <div class="item" data-thing-id="${item.thing_id}" data-purchase-id="${item.purchase_id}" data-src="${item.src}">
                     <div class="content">
@@ -83,13 +104,16 @@ var ReorderableList = (function (window, document, $, undefined) {
 
         function postInsertion() {
             // grab all of the list items from the dom, cast as an array
-            this.items = Array.prototype.slice.call(document.querySelectorAll(this.selectors.items));
-            // get height of any 1 item
-            this.itemHeight = parseInt(window.getComputedStyle(this.items[0], null).getPropertyValue('height'), 10);
-            // reorder the items
-            this.reorder();
-            // activate the checkboxes
-            this.initCheckboxes();
+            this.items = Array.prototype.slice.call(document.querySelectorAll(this.selectors.items) || []);
+
+            if (this.items && this.items[0]) {
+                // get height of any 1 item
+                this.itemHeight = parseInt(window.getComputedStyle(this.items[0], null).getPropertyValue('height'), 10);
+                // reorder the items
+                this.reorder();
+                // activate the checkboxes
+                this.initCheckboxes();
+            }
         }
 
         // render items

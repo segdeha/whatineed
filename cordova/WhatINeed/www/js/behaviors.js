@@ -1,8 +1,6 @@
 /* jshint esversion: 6 */
 (function (window, document, $, undefined) {
 
-    'use strict';
-
     // update whenever ngrok is restarted
     window.BASEURL = 'http://17e5c9e7.ngrok.io';
 
