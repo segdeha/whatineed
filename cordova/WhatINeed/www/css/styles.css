@@ -20,6 +20,7 @@
 #lists {
     display: none;
     opacity: 0;
+    position: relative;
 }
     #lists.show {
         display: block;
@@ -40,9 +41,10 @@ h1 {
 
 /* refresh button */
 #refresh {
+    margin-right: 0;
     position: absolute;
-    right: 12px;
-    top: 14px;
+    right: 0;
+    top: 0;
     width: 32px;
 }
     #refresh i {
