@@ -59,17 +59,17 @@ def things_list(request, user_id):
 
         # print(delta)
         if delta == 0:
-            last_purchased = 'Today'
+            last_purchased = 'today'
         elif delta == None:
-            last_purchased = 'Never'
+            last_purchased = 'never'
         elif delta < 0:
-            last_purchased = 'Well done time traveler'
+            last_purchased = 'well done time traveler'
         elif delta > 0:
             year = delta // 365
-            week = delta - (year * 365) // 7
-            days = delta - ((year * 365) + (week * 7))
+            week = ((year * 365) // 7) - delta
+            days = ((year * 365) + (week * 7)) - delta
             if year == 0 and week == 0 and days == 1:
-                last_purchased = 'Yesterday'
+                last_purchased = 'yesterday'
             elif year == 0 and week == 0:
                 last_purchased = '{number} days'.format(number = days)
             elif year == 0 and week == 1:
