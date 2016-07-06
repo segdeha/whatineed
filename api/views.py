@@ -27,8 +27,12 @@ def purchase(request):
     pass
 
 def things_list(request, user_id):
-    data = dict(Thing.objects.filter(id = user_id).values().first())
-    json_object = {'data':data}
+    data = Purchase.objects.filter(owner_id = user_id).order_by('purchase_date').iterator() #sort by predicted_replace_days
+    object_list = []
+    for i in data:
+        object_list.append(i.thing_id.name)
+
+    json_object = {'data':object_list}
     return JsonResponse(json_object)
 
 # Login authentication

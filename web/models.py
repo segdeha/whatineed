@@ -17,6 +17,9 @@ class Thing(models.Model):  #Things you will need to have to replenish in the ho
     product_image = models.URLField()
     barcode = models.CharField(max_length=32, validators=[MaxLengthValidator(32)], blank=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Purchase(models.Model):
 
@@ -35,6 +38,9 @@ class Purchase(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     purchase_date = models.DateTimeField(auto_now=False, blank=True, null=True)
     predicted_replace_days = models.PositiveSmallIntegerField(blank=True)
+
+    def __str__(self):
+        return self.thing_id.name
 
     # def duration(self):
     #     duration = self.consumed_time - self.purchase_time
