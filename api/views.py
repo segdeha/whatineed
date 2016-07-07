@@ -105,7 +105,7 @@ def things_list(request, user_id):
         }
 
         object_list.append(new_object)
-        ordered_ordered_object_list = sorted(object_list, key=itemgetter('last_purchased'))
+    ordered_ordered_object_list = sorted(object_list, key=itemgetter('last_purchased'), reverse=True)
 
 
     json_object = {'data':ordered_ordered_object_list}
