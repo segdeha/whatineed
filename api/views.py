@@ -79,8 +79,27 @@ def things_list(request, user_id):
 
         if most_recent_purchase_date == None:
             last_purchased = 'never'
+            status = 'immediately'
         else:
             delta = (now - most_recent_purchase_date).days
+
+            # print('name', i.thing_id.name)
+            # print('delta', delta)
+
+            if delta > 0:
+                status_pct = delta / i.predicted_replace_days * 100
+
+                # print('status_pct', status_pct)
+
+                if status_pct > 90:
+                    status = 'immediately'
+                elif status_pct > 50:
+                    status = 'soon'
+                else:
+                    status = 'later'
+            else:
+                status = 'later'
+
         # get time delta between now and the most recent purchase DateTimeField
 
 
@@ -114,7 +133,7 @@ def things_list(request, user_id):
         purchase_id = i.id
         purchase_thing_id = i.thing_id.id
         name = i.thing_id.name
-        status = i.read_state()
+        # status = i.read_state()
         src = i.thing_id.product_image # image
 
         new_object = {
