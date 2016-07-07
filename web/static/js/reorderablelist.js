@@ -51,7 +51,7 @@ var ReorderableList = (function (window, document, $, undefined) {
         var getting = $.getJSON(`${BASEURL}/api/things/${USERID}/`);
         // var getting = $.getJSON(`${BASEURL}/static/_data.json`);
         getting.done(function (json) {
-            var list = new ReorderableList(selectors, json.data);
+            window.list = new ReorderableList(selectors, json.data);
             list.render();
         });
         getting.fail(function (json) {

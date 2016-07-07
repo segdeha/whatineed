@@ -37,7 +37,7 @@ class Purchase(models.Model):
     estimated_number_of_days = models.PositiveSmallIntegerField(default=7, blank=False)
     created_date = models.DateTimeField(auto_now_add=True)
     purchase_date = models.DateTimeField(auto_now=False, blank=True, null=True)
-    predicted_replace_days = models.PositiveSmallIntegerField(blank=True)
+    predicted_replace_days = models.PositiveSmallIntegerField(default=7, blank=True)
 
     def __str__(self):
         return self.thing_id.name

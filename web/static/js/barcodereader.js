@@ -9,9 +9,48 @@ var BarcodeReader = (function (window, document, $, undefined) {
     /**
      * @constructor
      */
-    function BarcodeReader() {}
+    function BarcodeReader() {
+        var self = this;
+        $('#new-product .primary.button').click(function (evt) {
+            var $button = $(this);
+            $button.addClass('loading');
+            var thing_id = $('#new-product').attr('data-thing-id');
+            self.saveScannedThing(thing_id, $button);
+        });
+    }
 
     var proto = BarcodeReader.prototype;
+
+    proto.saveScannedThing = function (thing_id, $button) {
+        var self = this;
+        var number_of_days = document.querySelector('[name="number-of-days"]');
+
+        var postData = {
+            owner_id: USERID,
+            thing_id: thing_id,
+            purchase_id: null,
+            estimated_number_of_days: number_of_days.value || 7
+        };
+
+        var posting = $.post({
+            url: `${BASEURL}/api/purchase/`,
+            data: postData
+        });
+        posting.done(function (json) {
+            // close modal
+            $('#new-product').modal('hide');
+            // reset estimated number of days back to default-image
+            number_of_days.value = 7;
+            // thing saved successfully, get refreshed list
+            window.list.fetch();
+        });
+        posting.fail(function (json) {
+            alert('Adding product failed. Try again.');
+        });
+        posting.always(function () {
+            $button.removeClass('loading');
+        });
+    };
 
     /**
      * Take picture using device camera and retrieve image as base64-encoded string
@@ -39,7 +78,8 @@ var BarcodeReader = (function (window, document, $, undefined) {
             clearTimeout(timeout);
 
             function displayProductModal(data) {
-                var number_of_days = document.querySelector('[name="number-of-days"]');
+                // save thing_id to the dom element
+                $('#new-product').attr('data-thing-id', data.id);
 
                 // display barcode value
                 $('#barcode-result').html(result.codeResult.code);
@@ -53,43 +93,9 @@ var BarcodeReader = (function (window, document, $, undefined) {
 
                 // show product modal
                 $('#new-product').modal('show');
-
-                $('#new-product .primary.button').click(function (evt) {
-                    var $this = $(this);
-                    $this.addClass('loading');
-                    var barcode  = document.getElementById('barcode-result').innerHTML;
-                    var postData = {
-                        owner_id: USERID,
-                        thing_id: data.id,
-                        purchase_id: null,
-                        action: 'create',
-                        estimated_number_of_days: number_of_days.value
-                    };
-
-                    var posting = $.post({
-                        url: `${BASEURL}/api/purchase/`,
-                        data: postData
-                    });
-                    posting.done(function (json) {
-                        // close modal
-                        $('#new-product').modal('hide');
-                        // reset estimated number of days back to default-image
-                        number_of_days.value = 7;
-                        // thing saved successfully, get refreshed list
-                        ReorderableList.prototype.fetch();
-                    });
-                    posting.fail(function (json) {
-                        // close modal
-                        $('#new-product').modal('hide');
-                        window.requestAnimationFrame(function () {
-                            alert('Adding product failed. Try again.');
-                        });
-                    });
-                    posting.always(function () {
-                        $this.removeClass('loading');
-                    });
-                });
             }
+
+            displayProductModal = displayProductModal.bind(this);
 
             if(result.codeResult) {
                 // update status for the user
@@ -134,7 +140,7 @@ var BarcodeReader = (function (window, document, $, undefined) {
                 ] // List of active readers
             },
             locate: true, // try to locate the barcode in the image
-        }, callback);
+        }, callback.bind(this));
 
         // stop trying to decipher the barcode after 10 seconds
         var timeout = setTimeout(function () {
