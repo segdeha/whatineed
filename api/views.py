@@ -80,16 +80,12 @@ def things_list(request, user_id):
         if most_recent_purchase_date == None:
             last_purchased = 'never'
             status = 'immediately'
+            status_pct = 100.0
         else:
             delta = (now - most_recent_purchase_date).days
 
-            # print('name', i.thing_id.name)
-            # print('delta', delta)
-
             if delta > 0:
                 status_pct = delta / i.predicted_replace_days * 100
-
-                # print('status_pct', status_pct)
 
                 if status_pct > 90:
                     status = 'immediately'
@@ -99,11 +95,9 @@ def things_list(request, user_id):
                     status = 'later'
             else:
                 status = 'later'
+                status_pct = 0.0
 
-        # get time delta between now and the most recent purchase DateTimeField
-
-
-            # print(delta)
+            # get time delta between now and the most recent purchase DateTimeField
             if delta == 0:
                 last_purchased = 'today'
             elif delta < 0:
@@ -113,6 +107,7 @@ def things_list(request, user_id):
                 week = delta % 365 // 7
                 days = delta % 365 % 7
 
+                # make human readable
                 if year == 0 and week == 0 and days == 1:
                     last_purchased = 'yesterday'
                 elif year == 0 and week == 0:
@@ -126,30 +121,26 @@ def things_list(request, user_id):
                 else:
                     last_purchased = 'about {year} years ago'.format(number = days, week = week, year = year)
 
-
-            # make human readable
-
-
         purchase_id = i.id
         purchase_thing_id = i.thing_id.id
         name = i.thing_id.name
-        # status = i.read_state()
         src = i.thing_id.product_image # image
 
         new_object = {
             "thing_id": purchase_thing_id,
             "name": name,
             "status": status,
-            "last_purchased": last_purchased, # date delta to juman readable or null to never
+            "status_pct": status_pct,
+            "last_purchased": last_purchased, # date delta --> human readable or null --> 'never'
             "src": src,
             "purchase_id": purchase_id,
         }
 
         object_list.append(new_object)
-    ordered_ordered_object_list = sorted(object_list, key=itemgetter('last_purchased'), reverse=False)
 
-
+    ordered_ordered_object_list = sorted(object_list, key=itemgetter('status_pct'), reverse=True)
     json_object = {'data':ordered_ordered_object_list}
+
     return JsonResponse(json_object)
 
 # Login authentication
