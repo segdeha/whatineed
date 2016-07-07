@@ -154,7 +154,7 @@ var ReorderableList = (function (window, document, $, undefined) {
                 ;
 
                 // move the item to the end of the array
-                var idx = self.ids.indexOf(thing_id);
+                var idx = self.ids.indexOf(+thing_id); // cast thing_id as a number
                 self.ids.move(idx, self.ids.length - 1);
 
                 // reorder items in the ui
@@ -185,7 +185,7 @@ var ReorderableList = (function (window, document, $, undefined) {
 
                 // move the item to the beginning of the array
                 // TODO: move the item to the previous position?
-                var idx = self.ids.indexOf(thing_id);
+                var idx = self.ids.indexOf(+thing_id); // cast thing_id as a number
                 self.ids.move(idx, 0);
 
                 // reorder items in the ui
