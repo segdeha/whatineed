@@ -2,7 +2,7 @@
 (function (window, document, $, undefined) {
 
     // update whenever ngrok is restarted
-    window.BASEURL = 'http://4145e949.ngrok.io';
+    window.BASEURL = 'https://pdxcodeguild.fwd.wf';
 
     function onDeviceReady() {
         $('.ui.form').form({
