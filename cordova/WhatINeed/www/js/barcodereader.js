@@ -55,10 +55,11 @@ var BarcodeReader = (function (window, document, $, undefined) {
                 $('#new-product').modal('show');
 
                 $('#new-product .primary.button').click(function (evt) {
-                    this.classList.add('loading');
+                    var $this = $(this);
+                    $this.addClass('loading');
                     var barcode  = document.getElementById('barcode-result').innerHTML;
                     var postData = {
-                        user_id: USERID,
+                        owner_id: USERID,
                         thing_id: data.id,
                         purchase_id: null,
                         action: 'create',
@@ -83,6 +84,9 @@ var BarcodeReader = (function (window, document, $, undefined) {
                         window.requestAnimationFrame(function () {
                             alert('Adding product failed. Try again.');
                         });
+                    });
+                    posting.always(function () {
+                        $this.removeClass('loading');
                     });
                 });
             }

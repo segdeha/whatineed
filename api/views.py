@@ -32,15 +32,32 @@ def purchase(request):
     2. Create a new purchase record with a null purchase date
 
     """
-    try:
-        purchase_id = request.POST['purchase_id']
-        p = Purchase.objects.get(id=purchase_id)
-        p.purchase_date = timezone.now()
-        p.save()
+
+    def create_new_purchase(thing_id, owner_id):
         # TODO calculate predicted_replace_days based on new state of purchases
         new_purchase = Purchase(state=2, thing_id=p.thing_id, owner_id=p.owner_id, predicted_replace_days=7)
         new_purchase.save()
         json_object = {'status':'200 OK'}
+        return json_object
+
+    print(request.POST['purchase_id'] == '')
+
+    try:
+        if request.POST['purchase_id'] == '':
+            owner_id = request.POST['owner_id']
+            thing_id = request.POST['thing_id']
+            p = Purchase.objects.get(owner_id=owner_id, thing_id=thing_id)
+
+            print(p.__desc__)
+
+            json_object = create_new_purchase(thing_id, owner_id)
+        else:
+            purchase_id = request.POST['purchase_id']
+            p = Purchase.objects.get(id=purchase_id)
+            p.purchase_date = timezone.now()
+            p.save()
+
+            json_object = create_new_purchase(p.thing_id, p.owner_id)
     except:
         json_object = {'errors':{'title' : 'No Post Data', 'detail' : 'there was no post data in your request'}}
     return JsonResponse(json_object)
