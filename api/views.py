@@ -35,7 +35,7 @@ def purchase(request):
 
     def create_new_purchase(thing, owner):
         # TODO calculate predicted_replace_days based on new state of purchases
-        new_purchase = Purchase(state=2, thing_id=thing, owner_id=owner, predicted_replace_days=7)
+        new_purchase = Purchase(state=0, thing_id=thing, owner_id=owner, predicted_replace_days=7)
         new_purchase.save()
         json_object = {'status':'200 OK'}
 
