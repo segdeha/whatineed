@@ -1,1 +1,1 @@
-web: django-admin runserver
+web: python3 manage.py runserver
