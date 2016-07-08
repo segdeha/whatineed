@@ -122,8 +122,8 @@ input[type=range] {
     text-align: center;
 }
 
-.tab.segment[data-tab="first"] .list {
-    margin-bottom: 70px;
+.tab.segment[data-tab="first"] {
+    padding-bottom: 70px;
 }
 
 /* camera button */

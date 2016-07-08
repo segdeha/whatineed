@@ -74,10 +74,14 @@ var BarcodeReader = (function (window, document, $, undefined) {
         dimmer.classList.add('active');
 
         function callback(result) {
+            var getting;
+
             // clear the 10 second timeout
             clearTimeout(timeout);
 
             function displayProductModal(data) {
+                var barcode = result && result.codeResult && result.codeResult.code || '00000000';
+
                 // save thing_id to the dom element
                 $('#new-product').attr('data-thing-id', data.id);
 
@@ -101,15 +105,30 @@ var BarcodeReader = (function (window, document, $, undefined) {
                 // update status for the user
                 dimmer.querySelector('.text').innerHTML = 'Fetching product info…';
 
-                $.getJSON(`${BASEURL}/api/thing/${result.codeResult.code}/`, function (json) {
-                    json.data = json.data || {
-                        name: 'Unknown Product',
-                        product_image: 'img/default-image.png'
-                    };
+                getting = $.getJSON(`${BASEURL}/api/thing/${result.codeResult.code}/`);
+                getting.done(function (json) {
+                    // json.data = json.data || {
+                    //     id: 0,
+                    //     name: 'Unknown Product',
+                    //     product_image: 'https://pdxcodeguild.fwd.wf/static/img/default-image.png'
+                    // };
                     // preload the image before showing the modal
                     var img = new Image();
                     img.onload = function () {
                         displayProductModal(json.data);
+                    };
+                    img.src = json.data.product_image;
+                });
+                getting.fail(function (json) {
+                    var data = {
+                        id: 0,
+                        name: 'Unknown Product',
+                        product_image: 'https://pdxcodeguild.fwd.wf/static/img/default-image.png'
+                    };
+                    // preload the image before showing the modal
+                    var img = new Image();
+                    img.onload = function () {
+                        displayProductModal(data);
                     };
                     img.src = json.data.product_image;
                 });
