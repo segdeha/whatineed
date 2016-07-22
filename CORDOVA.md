@@ -135,20 +135,34 @@ _For more information refer to the [iOS Documentation](https://developer.apple.c
 1. If you didn’t already in Step 5, create a `res` directory at the same level as the `www` directory; inside it, create a `screen` directory and inside that create a directory for the two device platforms (`ios` & `android`); so, you should have the following two directory structures in place:
     - `res/screen/ios`
     - `res/screen/android`
-1. Add the forllowing PNGs to `res/screen/ios` (Honestly, it’s a bit of a mystery to me which of the following images actually get used on which devices. If you figure it out, please update this doc!):
+1. Add the forllowing PNGs to `res/screen/ios` (Honestly, it’s a bit of a mystery to me which of the following images actually get used on which devices. If you figure it out, please update this doc!): 
+	- `Default~iphone.png`
+	- `Default@2x~iphone.png`
+    - `Default-Portrait~ipad.png`
+    - `Default-Portrait@2x~ipad.png`
+    - `Default-Landscape~ipad.png`
+    - `Default-Landscape@2x~ipad.png`
     - `Default-568h@2x~iphone.png`
     - `Default-667h.png`
     - `Default-736h.png`
     - `Default-Landscape-736h.png`
-    - `Default@2x~iphone.png`
-    - `Default~iphone.png`
+    
+    _**edit**: I believe the funky sizes are to account for status bar sizes,  if you look at the screen sizes on the [iOS Splash Screen Documentation](https://developer.apple.com/ios/human-interface-guidelines/graphics/launch-screen/). additionally [this blogger](http://www.mobilemammoth.com/ios-app-icon-and-launch-image-sizes-for-iphone-6-and-6-plus/) mentions that suffixes are for serving different images to identical screen sizes.:_
+
 1. Add the following directives to `<platform name="ios"></platform>`:
-    - `<splash src="res/screen/ios/Default~iphone.png" width="320" height="480" />`
-    - `<splash src="res/screen/ios/Default@2x~iphone.png" width="640" height="960" />`
-    - `<splash src="res/screen/ios/Default-568h@2x~iphone.png" width="640" height="1136" />`
+
+
+   - `<splash src="res/screen/ios/Default~iphone.png" width="320" height="480"/>`
+    - `<splash src="res/screen/ios/Default@2x~iphone.png" width="640" height="960"/>`
+    - `<splash src="res/screen/ios/Default-Portrait~ipad.png" width="768" height="1024"/>`
+    - `<splash src="res/screen/ios/Default-Portrait@2x~ipad.png" width="1536" height="2048"/>`
+    - `<splash src="res/screen/ios/Default-Landscape~ipad.png" width="1024" height="768"/>`
+    - `<splash src="res/screen/ios/Default-Landscape@2x~ipad.png" width="2048" height="1536"/>`
+    - `<splash src="res/screen/ios/Default-568h@2x~iphone.png" width="640" height="1136"/>`
     - `<splash src="res/screen/ios/Default-667h.png" width="750" height="1334"/>`
-    - `<splash src="res/screen/ios/Default-736h.png" width="1242" height="2208" />`
-    - `<splash src="res/screen/ios/Default-Landscape-736h.png" width="2208" height="1242" />`
+    - `<splash src="res/screen/ios/Default-736h.png" width="1242" height="2208"/>`
+    - `<splash src="res/screen/ios/Default-Landscape-736h.png" width="2208" height="1242"/>`
+    
 1. Add the following PNGs to `res/screen/android`
     - `splash-port-mdpi.png.png`
     - `splash-port-hdpi.png.png`
